@@ -1,0 +1,989 @@
+{
+  "contigs": [
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00001",
+          "start": 180,
+          "end": 1283,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=180-1283<br>ID=GCA_001516045.1_00001<br>eC_number=1.17.1.4<br>Name=pucA<br>db_xref=COG:COG1975<br>gene=pucA<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00001<br>product=putative xanthine dehydrogenase subunit A"
+        },
+        {
+          "geneName": "GCA_001516045.1_00002",
+          "start": 1600,
+          "end": 2763,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=1600-2763<br>ID=GCA_001516045.1_00002<br>eC_number=1.1.1.202<br>Name=dhaT<br>db_xref=COG:COG1454<br>gene=dhaT<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00002<br>product=1,3-propanediol dehydrogenase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00003",
+          "start": 2865,
+          "end": 3203,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=2865-3203<br>ID=GCA_001516045.1_00003<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00003<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00004",
+          "start": 3668,
+          "end": 4387,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=3668-4387<br>ID=GCA_001516045.1_00004<br>eC_number=3.6.3.25<br>Name=cysA_1<br>db_xref=COG:COG1118<br>gene=cysA_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00004<br>product=Sulfate/thiosulfate import ATP-binding protein CysA"
+        },
+        {
+          "geneName": "GCA_001516045.1_00005",
+          "start": 4388,
+          "end": 5089,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=4388-5089<br>ID=GCA_001516045.1_00005<br>Name=tupB<br>gene=tupB<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00005<br>product=Tungstate uptake system permease protein TupB"
+        },
+        {
+          "geneName": "GCA_001516045.1_00006",
+          "start": 5466,
+          "end": 6368,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=5466-6368<br>ID=GCA_001516045.1_00006<br>Name=tupA<br>gene=tupA<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00006<br>product=Tungstate-binding protein TupA"
+        },
+        {
+          "geneName": "GCA_001516045.1_00007",
+          "start": 6536,
+          "end": 6886,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=6536-6886<br>ID=GCA_001516045.1_00007<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00007<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00008",
+          "start": 6926,
+          "end": 7654,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=6926-7654<br>ID=GCA_001516045.1_00008<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00008<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_1",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00009",
+          "start": 31,
+          "end": 2016,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=31-2016<br>ID=GCA_001516045.1_00009<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00009<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00010",
+          "start": 2113,
+          "end": 3330,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=2113-3330<br>ID=GCA_001516045.1_00010<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00010<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00011",
+          "start": 3431,
+          "end": 7825,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=3431-7825<br>ID=GCA_001516045.1_00011<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00011<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_2",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00012",
+          "start": 10,
+          "end": 531,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=10-531<br>ID=GCA_001516045.1_00012<br>eC_number=1.6.5.11<br>Name=nqo6<br>db_xref=COG:COG0377<br>gene=nqo6<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00012<br>product=NADH-quinone oxidoreductase subunit 6"
+        },
+        {
+          "geneName": "GCA_001516045.1_00013",
+          "start": 522,
+          "end": 881,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=522-881<br>ID=GCA_001516045.1_00013<br>eC_number=1.6.5.-<br>Name=ndhC<br>gene=ndhC<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00013<br>product=NAD(P)H-quinone oxidoreductase subunit 3"
+        },
+        {
+          "geneName": "GCA_001516045.1_00014",
+          "start": 1013,
+          "end": 1792,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=1013-1792<br>ID=GCA_001516045.1_00014<br>eC_number=3.1.26.4<br>Name=rnhB<br>db_xref=COG:COG0164<br>gene=rnhB<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00014<br>product=Ribonuclease HII"
+        },
+        {
+          "geneName": "GCA_001516045.1_00015",
+          "start": 1900,
+          "end": 2838,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=1900-2838<br>ID=GCA_001516045.1_00015<br>Name=rbgA<br>db_xref=COG:COG1161<br>gene=rbgA<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00015<br>product=Ribosome biogenesis GTPase A"
+        },
+        {
+          "geneName": "GCA_001516045.1_00016",
+          "start": 2916,
+          "end": 3428,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=2916-3428<br>ID=GCA_001516045.1_00016<br>eC_number=3.4.21.89<br>Name=spsB<br>gene=spsB<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00016<br>product=Signal peptidase IB"
+        },
+        {
+          "geneName": "GCA_001516045.1_00017",
+          "start": 3955,
+          "end": 4302,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=3955-4302<br>ID=GCA_001516045.1_00017<br>Name=rplS<br>gene=rplS<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00017<br>product=50S ribosomal protein L19"
+        },
+        {
+          "geneName": "GCA_001516045.1_00018",
+          "start": 4433,
+          "end": 4990,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=4433-4990<br>ID=GCA_001516045.1_00018<br>db_xref=COG:COG4752<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00018<br>product=putative protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00019",
+          "start": 5042,
+          "end": 5911,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=5042-5911<br>ID=GCA_001516045.1_00019<br>eC_number=2.1.1.228<br>Name=trmD<br>gene=trmD<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00019<br>product=tRNA (guanine-N(1)-)-methyltransferase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00020",
+          "start": 5919,
+          "end": 6419,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=5919-6419<br>ID=GCA_001516045.1_00020<br>Name=rimM<br>db_xref=COG:COG0806<br>gene=rimM<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00020<br>product=Ribosome maturation factor RimM"
+        },
+        {
+          "geneName": "GCA_001516045.1_00021",
+          "start": 6484,
+          "end": 6714,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=6484-6714<br>ID=GCA_001516045.1_00021<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00021<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00022",
+          "start": 6739,
+          "end": 7005,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=6739-7005<br>ID=GCA_001516045.1_00022<br>Name=rpsP<br>db_xref=COG:COG0228<br>gene=rpsP<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00022<br>product=30S ribosomal protein S16"
+        },
+        {
+          "geneName": "GCA_001516045.1_00023",
+          "start": 7241,
+          "end": 8605,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=7241-8605<br>ID=GCA_001516045.1_00023<br>Name=ffh<br>db_xref=COG:COG0541<br>gene=ffh<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00023<br>product=Signal recognition particle protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00024",
+          "start": 8681,
+          "end": 9049,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=8681-9049<br>ID=GCA_001516045.1_00024<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00024<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00025",
+          "start": 9127,
+          "end": 10428,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=9127-10428<br>ID=GCA_001516045.1_00025<br>eC_number=3.5.4.28<br>Name=mtaD<br>db_xref=COG:COG0402<br>gene=mtaD<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00025<br>product=5-methylthioadenosine/S-adenosylhomocysteine deaminase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00026",
+          "start": 10497,
+          "end": 11534,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=10497-11534<br>ID=GCA_001516045.1_00026<br>eC_number=5.3.1.23<br>Name=mtnA<br>db_xref=COG:COG0182<br>gene=mtnA<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00026<br>product=Methylthioribose-1-phosphate isomerase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00027",
+          "start": 11551,
+          "end": 12264,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=11551-12264<br>ID=GCA_001516045.1_00027<br>eC_number=2.4.2.44<br>db_xref=COG:COG0005<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00027<br>product=S-methyl-5'-thioinosine phosphorylase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00028",
+          "start": 12333,
+          "end": 13268,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=12333-13268<br>ID=GCA_001516045.1_00028<br>Name=ftsY<br>db_xref=COG:COG0552<br>gene=ftsY<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00028<br>product=Signal recognition particle receptor FtsY"
+        },
+        {
+          "geneName": "GCA_001516045.1_00029",
+          "start": 13926,
+          "end": 17507,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=13926-17507<br>ID=GCA_001516045.1_00029<br>Name=smc_1<br>db_xref=COG:COG1196<br>gene=smc_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00029<br>product=Chromosome partition protein Smc"
+        },
+        {
+          "geneName": "GCA_001516045.1_00030",
+          "start": 17500,
+          "end": 18273,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=17500-18273<br>ID=GCA_001516045.1_00030<br>eC_number=3.1.26.3<br>Name=rnc<br>db_xref=COG:COG0571<br>gene=rnc<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00030<br>product=Ribonuclease 3"
+        },
+        {
+          "geneName": "GCA_001516045.1_00031",
+          "start": 18454,
+          "end": 19695,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=18454-19695<br>ID=GCA_001516045.1_00031<br>eC_number=2.3.1.179<br>Name=fabF_1<br>db_xref=COG:COG0304<br>gene=fabF_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00031<br>product=3-oxoacyl-[acyl-carrier-protein] synthase 2"
+        },
+        {
+          "geneName": "GCA_001516045.1_00032",
+          "start": 19689,
+          "end": 20648,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=19689-20648<br>ID=GCA_001516045.1_00032<br>eC_number=1.13.12.16<br>db_xref=COG:COG2070<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00032<br>product=Nitronate monooxygenase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00033",
+          "start": 20803,
+          "end": 21030,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=20803-21030<br>ID=GCA_001516045.1_00033<br>Name=acpP_1<br>db_xref=COG:COG0236<br>gene=acpP_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00033<br>product=Acyl carrier protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00034",
+          "start": 21114,
+          "end": 21857,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=21114-21857<br>ID=GCA_001516045.1_00034<br>eC_number=1.1.1.100<br>Name=fabG_1<br>gene=fabG_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00034<br>product=3-oxoacyl-[acyl-carrier-protein] reductase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00035",
+          "start": 21859,
+          "end": 22794,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=21859-22794<br>ID=GCA_001516045.1_00035<br>eC_number=2.3.1.39<br>Name=fabD_1<br>db_xref=COG:COG0331<br>gene=fabD_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00035<br>product=Malonyl CoA-acyl carrier protein transacylase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00036",
+          "start": 22797,
+          "end": 23753,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=22797-23753<br>ID=GCA_001516045.1_00036<br>eC_number=1.13.12.16<br>db_xref=COG:COG2070<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00036<br>product=Nitronate monooxygenase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00037",
+          "start": 23750,
+          "end": 24751,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=23750-24751<br>ID=GCA_001516045.1_00037<br>eC_number=2.3.1.180<br>Name=fabH<br>gene=fabH<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00037<br>product=3-oxoacyl-[acyl-carrier-protein] synthase 3"
+        },
+        {
+          "geneName": "GCA_001516045.1_00038",
+          "start": 24792,
+          "end": 25781,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=24792-25781<br>ID=GCA_001516045.1_00038<br>eC_number=2.3.1.-<br>Name=plsX<br>db_xref=COG:COG0416<br>gene=plsX<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00038<br>product=Phosphate acyltransferase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00039",
+          "start": 25782,
+          "end": 26378,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=25782-26378<br>ID=GCA_001516045.1_00039<br>Name=fapR<br>db_xref=COG:COG2050<br>gene=fapR<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00039<br>product=Transcription factor FapR"
+        },
+        {
+          "geneName": "GCA_001516045.1_00040",
+          "start": 26743,
+          "end": 26922,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=26743-26922<br>ID=GCA_001516045.1_00040<br>Name=rpmF<br>db_xref=COG:COG0333<br>gene=rpmF<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00040<br>product=50S ribosomal protein L32"
+        },
+        {
+          "geneName": "GCA_001516045.1_00041",
+          "start": 26955,
+          "end": 27464,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=26955-27464<br>ID=GCA_001516045.1_00041<br>db_xref=COG:COG1399<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00041<br>product=putative protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00042",
+          "start": 27770,
+          "end": 28963,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=27770-28963<br>ID=GCA_001516045.1_00042<br>eC_number=2.7.2.1<br>Name=ackA<br>db_xref=COG:COG0282<br>gene=ackA<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00042<br>product=Acetate kinase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00043",
+          "start": 29570,
+          "end": 30721,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=29570-30721<br>ID=GCA_001516045.1_00043<br>Name=ylbJ<br>db_xref=COG:COG3314<br>gene=ylbJ<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00043<br>product=Sporulation integral membrane protein YlbJ"
+        },
+        {
+          "geneName": "GCA_001516045.1_00044",
+          "start": 31019,
+          "end": 31507,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=31019-31507<br>ID=GCA_001516045.1_00044<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00044<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00045",
+          "start": 31314,
+          "end": 31814,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=31314-31814<br>ID=GCA_001516045.1_00045<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00045<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00046",
+          "start": 31831,
+          "end": 32382,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=31831-32382<br>ID=GCA_001516045.1_00046<br>eC_number=2.1.1.171<br>Name=rsmD<br>db_xref=COG:COG0742<br>gene=rsmD<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00046<br>product=Ribosomal RNA small subunit methyltransferase D"
+        },
+        {
+          "geneName": "GCA_001516045.1_00047",
+          "start": 32432,
+          "end": 32590,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=32432-32590<br>ID=GCA_001516045.1_00047<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00047<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00048",
+          "start": 32681,
+          "end": 33667,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=32681-33667<br>ID=GCA_001516045.1_00048<br>eC_number=3.4.24.78<br>Name=gpr<br>gene=gpr<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00048<br>product=Germination protease"
+        },
+        {
+          "geneName": "GCA_001516045.1_00049",
+          "start": 34379,
+          "end": 34507,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=34379-34507<br>ID=GCA_001516045.1_00049<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00049<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00050",
+          "start": 34612,
+          "end": 37239,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=34612-37239<br>ID=GCA_001516045.1_00050<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00050<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00051",
+          "start": 37334,
+          "end": 37429,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=37334-37429<br>ID=GCA_001516045.1_00051<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00051<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00052",
+          "start": 37641,
+          "end": 39275,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=37641-39275<br>ID=GCA_001516045.1_00052<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00052<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00053",
+          "start": 39272,
+          "end": 40963,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=39272-40963<br>ID=GCA_001516045.1_00053<br>Name=malT_1<br>gene=malT_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00053<br>product=HTH-type transcriptional regulator MalT"
+        },
+        {
+          "geneName": "GCA_001516045.1_00054",
+          "start": 40969,
+          "end": 41412,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=40969-41412<br>ID=GCA_001516045.1_00054<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00054<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00055",
+          "start": 41445,
+          "end": 41906,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=41445-41906<br>ID=GCA_001516045.1_00055<br>eC_number=2.7.11.1<br>Name=rsbW_1<br>db_xref=COG:COG2172<br>gene=rsbW_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00055<br>product=Serine-protein kinase RsbW"
+        },
+        {
+          "geneName": "GCA_001516045.1_00056",
+          "start": 41899,
+          "end": 42249,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=41899-42249<br>ID=GCA_001516045.1_00056<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00056<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00057",
+          "start": 42555,
+          "end": 45608,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=42555-45608<br>ID=GCA_001516045.1_00057<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00057<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_3",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00058",
+          "start": 308,
+          "end": 556,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=308-556<br>ID=GCA_001516045.1_00058<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00058<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00059",
+          "start": 709,
+          "end": 1500,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=709-1500<br>ID=GCA_001516045.1_00059<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00059<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00060",
+          "start": 2135,
+          "end": 2590,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=2135-2590<br>ID=GCA_001516045.1_00060<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00060<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00061",
+          "start": 2680,
+          "end": 2937,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=2680-2937<br>ID=GCA_001516045.1_00061<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00061<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00062",
+          "start": 3010,
+          "end": 3957,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=3010-3957<br>ID=GCA_001516045.1_00062<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00062<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00063",
+          "start": 4319,
+          "end": 4558,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=4319-4558<br>ID=GCA_001516045.1_00063<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00063<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_4",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00064",
+          "start": 89,
+          "end": 982,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=89-982<br>ID=GCA_001516045.1_00064<br>eC_number=1.-.-.-<br>Name=fadF_1<br>db_xref=COG:COG0247<br>gene=fadF_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00064<br>product=putative iron-sulfur-binding oxidoreductase FadF"
+        },
+        {
+          "geneName": "GCA_001516045.1_00065",
+          "start": 1216,
+          "end": 1446,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=1216-1446<br>ID=GCA_001516045.1_00065<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00065<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00066",
+          "start": 1663,
+          "end": 4320,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=1663-4320<br>ID=GCA_001516045.1_00066<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00066<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00067",
+          "start": 4501,
+          "end": 5139,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=4501-5139<br>ID=GCA_001516045.1_00067<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00067<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00068",
+          "start": 5161,
+          "end": 5763,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=5161-5763<br>ID=GCA_001516045.1_00068<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00068<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00069",
+          "start": 5778,
+          "end": 7475,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=5778-7475<br>ID=GCA_001516045.1_00069<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00069<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_5",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00070",
+          "start": 918,
+          "end": 1193,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=918-1193<br>ID=GCA_001516045.1_00070<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00070<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00071",
+          "start": 1569,
+          "end": 2705,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=1569-2705<br>ID=GCA_001516045.1_00071<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00071<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00072",
+          "start": 3131,
+          "end": 4306,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=3131-4306<br>ID=GCA_001516045.1_00072<br>eC_number=2.6.1.83<br>Name=dapL_1<br>db_xref=COG:COG0436<br>gene=dapL_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00072<br>product=LL-diaminopimelate aminotransferase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00073",
+          "start": 4323,
+          "end": 5672,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=4323-5672<br>ID=GCA_001516045.1_00073<br>Name=mepA_1<br>gene=mepA_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00073<br>product=Multidrug export protein MepA"
+        },
+        {
+          "geneName": "GCA_001516045.1_00074",
+          "start": 6021,
+          "end": 6722,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=6021-6722<br>ID=GCA_001516045.1_00074<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00074<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00075",
+          "start": 6849,
+          "end": 9023,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=6849-9023<br>ID=GCA_001516045.1_00075<br>Name=yhgF<br>db_xref=COG:COG2183<br>gene=yhgF<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00075<br>product=Protein YhgF"
+        },
+        {
+          "geneName": "GCA_001516045.1_00076",
+          "start": 9110,
+          "end": 9769,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=9110-9769<br>ID=GCA_001516045.1_00076<br>eC_number=3.1.4.-<br>Name=rpfG<br>db_xref=COG:COG3437<br>gene=rpfG<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00076<br>product=Cyclic di-GMP phosphodiesterase response regulator RpfG"
+        }
+      ],
+      "contigName": "GCA_001516045.1_6",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00077",
+          "start": 181,
+          "end": 291,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=181-291<br>ID=GCA_001516045.1_00077<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00077<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00078",
+          "start": 368,
+          "end": 649,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=368-649<br>ID=GCA_001516045.1_00078<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00078<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00079",
+          "start": 694,
+          "end": 1989,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=694-1989<br>ID=GCA_001516045.1_00079<br>eC_number=1.4.1.2<br>Name=gluD_1<br>gene=gluD_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00079<br>product=NAD-specific glutamate dehydrogenase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00080",
+          "start": 2656,
+          "end": 4074,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=2656-4074<br>ID=GCA_001516045.1_00080<br>Name=yhdG<br>db_xref=COG:COG0531<br>gene=yhdG<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00080<br>product=putative amino acid permease YhdG"
+        },
+        {
+          "geneName": "GCA_001516045.1_00081",
+          "start": 4313,
+          "end": 6031,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=4313-6031<br>ID=GCA_001516045.1_00081<br>Name=norR_1<br>gene=norR_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00081<br>product=Anaerobic nitric oxide reductase transcription regulator NorR"
+        },
+        {
+          "geneName": "GCA_001516045.1_00082",
+          "start": 6554,
+          "end": 7879,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=6554-7879<br>ID=GCA_001516045.1_00082<br>eC_number=2.6.1.48<br>Name=davT<br>db_xref=COG:COG0160<br>gene=davT<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00082<br>product=5-aminovalerate aminotransferase DavT"
+        },
+        {
+          "geneName": "GCA_001516045.1_00083",
+          "start": 8436,
+          "end": 10169,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=8436-10169<br>ID=GCA_001516045.1_00083<br>Name=norR_2<br>gene=norR_2<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00083<br>product=Anaerobic nitric oxide reductase transcription regulator NorR"
+        },
+        {
+          "geneName": "GCA_001516045.1_00084",
+          "start": 10975,
+          "end": 12516,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=10975-12516<br>ID=GCA_001516045.1_00084<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00084<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00085",
+          "start": 12724,
+          "end": 13281,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=12724-13281<br>ID=GCA_001516045.1_00085<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00085<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_7",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00086",
+          "start": 95,
+          "end": 784,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=95-784<br>ID=GCA_001516045.1_00086<br>eC_number=2.8.3.6<br>Name=catJ_1<br>gene=catJ_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00086<br>product=3-oxoadipate CoA-transferase subunit B"
+        },
+        {
+          "geneName": "GCA_001516045.1_00087",
+          "start": 989,
+          "end": 2719,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=989-2719<br>ID=GCA_001516045.1_00087<br>Name=norR_3<br>gene=norR_3<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00087<br>product=Anaerobic nitric oxide reductase transcription regulator NorR"
+        },
+        {
+          "geneName": "GCA_001516045.1_00088",
+          "start": 3187,
+          "end": 4434,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=3187-4434<br>ID=GCA_001516045.1_00088<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00088<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00089",
+          "start": 4529,
+          "end": 5503,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=4529-5503<br>ID=GCA_001516045.1_00089<br>eC_number=2.8.3.12<br>Name=gctA<br>db_xref=COG:COG1788<br>gene=gctA<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00089<br>product=Glutaconate CoA-transferase subunit A"
+        }
+      ],
+      "contigName": "GCA_001516045.1_8",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00090",
+          "start": 581,
+          "end": 1408,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=581-1408<br>ID=GCA_001516045.1_00090<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00090<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00091",
+          "start": 1960,
+          "end": 3108,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=1960-3108<br>ID=GCA_001516045.1_00091<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00091<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00092",
+          "start": 3101,
+          "end": 3652,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=3101-3652<br>ID=GCA_001516045.1_00092<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00092<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00093",
+          "start": 3791,
+          "end": 4054,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=3791-4054<br>ID=GCA_001516045.1_00093<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00093<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00094",
+          "start": 4531,
+          "end": 5442,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=4531-5442<br>ID=GCA_001516045.1_00094<br>eC_number=3.1.26.11<br>Name=rnz<br>db_xref=COG:COG1234<br>gene=rnz<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00094<br>product=Ribonuclease Z"
+        },
+        {
+          "geneName": "GCA_001516045.1_00095",
+          "start": 6034,
+          "end": 6318,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=6034-6318<br>ID=GCA_001516045.1_00095<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00095<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00096",
+          "start": 6296,
+          "end": 6619,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=6296-6619<br>ID=GCA_001516045.1_00096<br>eC_number=3.7.1.22<br>Name=iolD<br>gene=iolD<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00096<br>product=3D-(3,5/4)-trihydroxycyclohexane-1,2-dione hydrolase"
+        }
+      ],
+      "contigName": "GCA_001516045.1_9",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00097",
+          "start": 136,
+          "end": 384,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=136-384<br>ID=GCA_001516045.1_00097<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00097<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00098",
+          "start": 984,
+          "end": 6932,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=984-6932<br>ID=GCA_001516045.1_00098<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00098<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_10",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00099",
+          "start": 118,
+          "end": 474,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=118-474<br>ID=GCA_001516045.1_00099<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00099<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00100",
+          "start": 569,
+          "end": 1171,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=569-1171<br>ID=GCA_001516045.1_00100<br>Name=kstR2_1<br>gene=kstR2_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00100<br>product=HTH-type transcriptional repressor KstR2"
+        },
+        {
+          "geneName": "GCA_001516045.1_00101",
+          "start": 1557,
+          "end": 2918,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=1557-2918<br>ID=GCA_001516045.1_00101<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00101<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00102",
+          "start": 2922,
+          "end": 3239,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=2922-3239<br>ID=GCA_001516045.1_00102<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00102<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00103",
+          "start": 3255,
+          "end": 4442,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=3255-4442<br>ID=GCA_001516045.1_00103<br>eC_number=2.3.1.9<br>Name=thlA_1<br>db_xref=COG:COG0183<br>gene=thlA_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00103<br>product=Acetyl-CoA acetyltransferase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00104",
+          "start": 4468,
+          "end": 5241,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=4468-5241<br>ID=GCA_001516045.1_00104<br>eC_number=4.2.1.150<br>Name=crt_1<br>db_xref=COG:COG1024<br>gene=crt_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00104<br>product=Short-chain-enoyl-CoA hydratase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00105",
+          "start": 5303,
+          "end": 6670,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=5303-6670<br>ID=GCA_001516045.1_00105<br>eC_number=6.3.4.14<br>Name=accC<br>db_xref=COG:COG0439<br>gene=accC<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00105<br>product=Biotin carboxylase"
+        },
+        {
+          "geneName": "GCA_001516045.1_00106",
+          "start": 6657,
+          "end": 6869,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=6657-6869<br>ID=GCA_001516045.1_00106<br>eC_number=4.1.1.-<br>Name=madF<br>gene=madF<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00106<br>product=Biotin carrier protein MADF"
+        },
+        {
+          "geneName": "GCA_001516045.1_00107",
+          "start": 6928,
+          "end": 8466,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=6928-8466<br>ID=GCA_001516045.1_00107<br>eC_number=2.1.3.1<br>db_xref=COG:COG4799<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00107<br>product=Methylmalonyl-CoA carboxyltransferase 12S subunit"
+        },
+        {
+          "geneName": "GCA_001516045.1_00108",
+          "start": 8507,
+          "end": 9373,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=8507-9373<br>ID=GCA_001516045.1_00108<br>eC_number=1.1.1.157<br>Name=mmgB_1<br>db_xref=COG:COG1250<br>gene=mmgB_1<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00108<br>product=putative 3-hydroxybutyryl-CoA dehydrogenase"
+        }
+      ],
+      "contigName": "GCA_001516045.1_11",
+      "contigLength": 1
+    },
+    {
+      "genes": [
+        {
+          "geneName": "GCA_001516045.1_00109",
+          "start": 585,
+          "end": 764,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=585-764<br>ID=GCA_001516045.1_00109<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00109<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00110",
+          "start": 812,
+          "end": 2182,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=812-2182<br>ID=GCA_001516045.1_00110<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00110<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00111",
+          "start": 2542,
+          "end": 3549,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=2542-3549<br>ID=GCA_001516045.1_00111<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00111<br>product=hypothetical protein"
+        },
+        {
+          "geneName": "GCA_001516045.1_00112",
+          "start": 3945,
+          "end": 4136,
+          "strand": "+",
+          "type": "CDS",
+          "description": "pos=3945-4136<br>ID=GCA_001516045.1_00112<br>Name=rpmB<br>db_xref=COG:COG0227<br>gene=rpmB<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00112<br>product=50S ribosomal protein L28"
+        },
+        {
+          "geneName": "GCA_001516045.1_00113",
+          "start": 4434,
+          "end": 5318,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=4434-5318<br>ID=GCA_001516045.1_00113<br>Name=hslO<br>db_xref=COG:COG1281<br>gene=hslO<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00113<br>product=33 kDa chaperonin"
+        },
+        {
+          "geneName": "GCA_001516045.1_00114",
+          "start": 5494,
+          "end": 6378,
+          "strand": "-",
+          "type": "CDS",
+          "description": "pos=5494-6378<br>ID=GCA_001516045.1_00114<br>inference=ab initio prediction:Prodigal:2.6<br>locus_tag=GCA_001516045.1_00114<br>product=hypothetical protein"
+        }
+      ],
+      "contigName": "GCA_001516045.1_12",
+      "contigLength": 1
+    }
+  ],
+  "genomeName": "testGenome"
+}
