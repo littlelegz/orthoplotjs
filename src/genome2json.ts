@@ -49,8 +49,24 @@ export class Genome extends BaseObject implements IGenome {
     this.genomeName = genomeName;
   }
 
-  add_contig(contig: Contig): void {
+  addContig(contig: Contig): void {
     this.contigs.push(contig);
+  }
+
+  to_dict(): { [key: string]: any } {
+    const orderedDict: { [key: string]: any } = {
+      genomeName: this.genomeName,
+      contigs: this.contigs
+    };
+
+    // Add any additional attributes set via set_attr
+    Object.keys(this).forEach(key => {
+      if (key !== 'genomeName' && key !== 'contigs') {
+        orderedDict[key] = this[key];
+      }
+    });
+
+    return orderedDict;
   }
 }
 
@@ -62,7 +78,7 @@ export class GenomeSet extends BaseObject {
     this.genomes = genomes;
   }
 
-  add_genome(genome: Genome): void {
+  addGenome(genome: Genome): void {
     this.genomes.push(genome);
   }
 }
@@ -76,7 +92,7 @@ export class Contig extends BaseObject implements IContig {
     this.contigName = contigName;
   }
 
-  add_gene(gene: Gene): void {
+  addGene(gene: Gene): void {
     this.genes.push(gene);
   }
 }
@@ -108,11 +124,11 @@ export class Gene extends BaseObject implements IGene {
 }
 
 export class EdgeGene extends Gene {
-  ortho_tag: string;
+  orthoTag: string;
 
-  constructor(start: number, end: number, strand: number, ortho_tag: string) {
+  constructor(start: number, end: number, strand: number, orthoTag: string) {
     super("Edge", start, end, strand, "Edge", "");
-    this.ortho_tag = ortho_tag;
+    this.orthoTag = orthoTag;
   }
 }
 
@@ -128,7 +144,7 @@ export function parseGFFDict(gffDoc: string): { [genomeName: string]: string } {
   const gffDict: { [genomeName: string]: string } = {};
   const files = fs.readdirSync(gffDoc);
   for (const file of files) {
-    if (file.endsWith('.gff', '.gff3')) {
+    if (file.endsWith('.gff') || file.endsWith('.gff3')) { // Check for GFF or GFF3 files
       const genomeName = file.split('.')[0]; // Extract genome name from the filename
       gffDict[genomeName] = `${gffDoc}/${file}`;
     }
@@ -214,12 +230,12 @@ export function gff2json(genomeName: string, inpath: string): Genome {
       repeatIdx = -1; // Reset repeat index for non-repeat genes
     }
     const gene = new Gene(geneName, start, end, strand, geneType, geneDesc.join("<br>"));
-    contigs[contigName].add_gene(gene); // Add gene to the contig
+    contigs[contigName].addGene(gene); // Add gene to the contig
   });
 
   // Add all contigs to the genome
   Object.values(contigs).forEach((contig) => {
-    genome.add_contig(contig);
+    genome.addContig(contig);
   });
 
   return genome;
@@ -239,7 +255,7 @@ export function createJSONObjBatch(gffDict: { [genomeName: string]: string }): G
   // Iterate over the gffDict to create JSON objects for each genome
   for (const [genomeName, inpath] of Object.entries(gffDict)) {
     const genome = gff2json(genomeName, inpath);
-    genomes.push(genome);
+    genomes.addGenome(genome);
   }
   return genomes;
 }
@@ -278,7 +294,7 @@ export function parseOrtho(path: string): { [key: string]: string } {
 }
 
 /**
- * Add ortho tags to genes in a genome set. (add_ortho_tags)
+ * Add ortho tags to genes in a genome set. (add_orthoTags)
  * @param genomeSet - A GenomeSet object containing genomes and their contigs
  * @param orthoFile - Path to the input file containing ortho tags
  */
@@ -288,7 +304,7 @@ export function addOrthoTags(genomeSet: GenomeSet, orthoFile: string): void {
     genome.contigs.forEach((contig) => {
       contig.genes.forEach((gene) => {
         if (orthoTagDict[gene.geneName]) {
-          gene.set_attr("ortho_tag", orthoTagDict[gene.geneName]);
+          gene.set_attr("orthoTag", orthoTagDict[gene.geneName]);
         }
       });
     });

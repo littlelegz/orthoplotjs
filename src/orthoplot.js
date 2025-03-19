@@ -98,10 +98,10 @@ orthoplot.drawOrderedClusterOrfs = function(
         return "orthoplot-type-" + d.type + " orthoplot-gene-" + geneType + " orthoplot-gene";
       })
       .attr("id", function(d) {
-        return idx + "-cluster" + cluster.idx + "-" + orthoplot.tag_to_id(d.gene_name) + "-orf";
+        return idx + "-cluster" + cluster.idx + "-" + orthoplot.tag_to_id(d.geneName) + "-orf";
       })
       .attr("name", function(d) {
-        return d.ortho_tag ? d.ortho_tag : null;
+        return d.orthoTag ? d.orthoTag : null;
       })
       .attr("style", function(d) {
         if (d.color !== undefined && d.type == "CDS") {
@@ -109,11 +109,11 @@ orthoplot.drawOrderedClusterOrfs = function(
         }
       })
       .on("mouseover", function(d) {
-        let ortho_tag = this.__data__.ortho_tag
+        let orthoTag = this.__data__.orthoTag
         tooltip.transition()
           .duration(200)
           .style('opacity', .9)
-        tooltip.html((ortho_tag ? "ortho_tag=" + ortho_tag + "<br>" : "") + this.__data__.description)
+        tooltip.html((orthoTag ? "orthoTag=" + orthoTag + "<br>" : "") + this.__data__.description)
           .style('left', d.pageX + 'px')
           .style('top', d.pageY + 'px')
       })
@@ -139,6 +139,13 @@ orthoplot.drawOrderedClusterOrfs = function(
 
 };
 
+/**
+ * 
+ * @param {*} id - the id of the container to draw the clusters in
+ * @param {*} clusters - contig? object which contains genes
+ * @param {*} height 
+ * @param {*} width 
+ */
 orthoplot.drawClusters = function(id, clusters, height, width) {
   let container = d3.select("#" + id);
   let single_cluster_height = height + (2 * orthoplot.label_height);

@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  background-image: linear-gradient(to bottom, #020917, #101725);
+}
+
+.content {
+  display: flex;
+  min-height: 100vh;
+  line-height: 1.1;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content h1 {
+  font-size: 3.6rem;
+  font-weight: 700;
+}
+
+.content p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
+.div-floater {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 1em;
+  right: 1em;
+  width: 350px;
+  border: 0.5px solid grey;
+  background-color: white;
+  padding: 1.5em;
+  border-radius: 20px;
+  box-shadow: 2px 2px #888;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: left;
+  font-size: 80%;
+  padding: 0.5em;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+}
