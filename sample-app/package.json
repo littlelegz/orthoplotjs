@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "homepage": "https://littlelegz.github.io/orthoplotjs",
+  "homepage": "https://littlelegz.github.io",
   "scripts": {
     "build": "rsbuild build",
     "dev": "rsbuild dev --open",
@@ -19,7 +19,8 @@
     "jsonpath": "^1.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-draggable": "^4.4.6"
+    "react-draggable": "^4.4.6",
+    "react-router-dom": "^7.4.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.2.16",

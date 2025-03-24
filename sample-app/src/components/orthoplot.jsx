@@ -126,6 +126,10 @@ const OrthoPlot = ({ id, clusters, height, width }) => {
         })
         .on("mouseout", () => {
           setTooltip(prev => ({ ...prev, show: false }));
+        })
+        .on("click", function (event, d) {
+          const clickedData = d3.select(event.target).datum();
+          console.log(clickedData)
         });
     }
 
