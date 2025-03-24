@@ -15,7 +15,7 @@ interface IGene {
   geneName: string;
   start: number;
   end: number;
-  strand: number;
+  strand: string;
   description: string;
   type: string;
 }
@@ -101,7 +101,7 @@ export class Gene extends BaseObject implements IGene {
   geneName: string;
   start: number;
   end: number;
-  strand: number;
+  strand: string;
   description: string;
   type: string;
 
@@ -109,7 +109,7 @@ export class Gene extends BaseObject implements IGene {
     geneName: string,
     start: number,
     end: number,
-    strand: number,
+    strand: string,
     gene_type: string,
     description: string = ""
   ) {
@@ -126,7 +126,7 @@ export class Gene extends BaseObject implements IGene {
 export class EdgeGene extends Gene {
   orthoTag: string;
 
-  constructor(start: number, end: number, strand: number, orthoTag: string) {
+  constructor(start: number, end: number, strand: string, orthoTag: string) {
     super("Edge", start, end, strand, "Edge", "");
     this.orthoTag = orthoTag;
   }
@@ -168,7 +168,7 @@ export function getContigLengthDict(inpath: string): { [id: string]: number } {
       const parts = line.split(/\s+/);
       if (parts.length >= 3) {
         const contigId = parts[1];
-        const length = parseInt(parts[2], 10);
+        const length = parseInt(parts[3], 10);
         contigLengthDict[contigId] = length;
       }
     }
@@ -209,9 +209,9 @@ export function gff2json(genomeName: string, inpath: string): Genome {
     contigs[contigName].set_attr("contigLength", contigLengthDict[contigName] || 0); // Set contig length if available
 
     const geneType = feature[0].type;
-    const start: number = feature[0].start;
+    const start: number = feature[0].start - 1;
     const end: number = feature[0].end;
-    const strand: number = feature[0].strand;
+    const strand: string = feature[0].strand;
     // Read the description for the gene
     const geneDesc: string[] = [`pos=${start}-${end}`];
     Object.entries(feature[0].attributes).forEach(([key, value]) => {

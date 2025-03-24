@@ -151,7 +151,7 @@ export function parseGFFContent(genomeName: string, gffContent: string): Genome 
             const parts = line.split(/\s+/);
             if (parts.length >= 3) {
                 const contigId = parts[1];
-                const length = parseInt(parts[2], 10);
+                const length = parseInt(parts[3], 10);
                 contigLengthDict[contigId] = length;
             }
         }
@@ -169,9 +169,9 @@ export function parseGFFContent(genomeName: string, gffContent: string): Genome 
         contigs[contigName].set_attr("contigLength", contigLengthDict[contigName] || 0);
 
         const geneType = feature[0].type;
-        const start: number = feature[0].start;
+        const start: number = feature[0].start - 1;
         const end: number = feature[0].end;
-        const strand: number = feature[0].strand;
+        const strand: number = feature[0].strand === "+" ? 1 : (feature[0].strand === "-" ? -1 : 0);
 
         const geneDesc: string[] = [`pos=${start}-${end}`];
         Object.entries(feature[0].attributes).forEach(([key, value]) => {

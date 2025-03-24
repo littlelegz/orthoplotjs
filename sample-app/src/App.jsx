@@ -5,19 +5,21 @@ import OrthoPlot from './components/orthoplot';
 import * as d3_save_svg from 'd3-save-svg';
 import './App.css';
 import { parseGFFContent } from './utils/utils';
+import Draggable from 'react-draggable';
 
 function App() {
   const [flankSize, setFlankSize] = useState(5000);
   const [panelWidth, setPanelWidth] = useState(1000);
   const [panelHeight, setPanelHeight] = useState(20);
   const [genomeObjs, setGenomeObjs] = useState(null);
+  const [orthos, setOrthos] = useState({});
   const [curOrthoID, setCurOrthoID] = useState('');
   const [preOrthoCol, setPreOrthoCol] = useState([]);
   const [displayClusters, setDisplayClusters] = useState([]); // New state to hold clusters
 
   const clusterRef = useRef(null);
   const orthoIDRef = useRef(null);
-  const orthoplotRef = useRef(null);
+  const divFloater = useRef(null);
 
   // Load JSON and initialize state
   useEffect(() => {
@@ -37,11 +39,26 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Apply orthos to genomeObjs
     if (genomeObjs && curOrthoID) {
       drawClusters();
-      initEventHandlers();
     }
-  }, [genomeObjs, curOrthoID]);
+  }, [genomeObjs, curOrthoID, orthos]);
+
+  useEffect(() => {
+    if (orthos && genomeObjs) {
+      console.log("Applying orthos to genomeObjs...");
+      genomeObjs.forEach(genome => {
+        genome.contigs.forEach(contig => {
+          contig.genes.forEach(gene => {
+            if (orthos[gene.geneName]) {
+              gene.orthoTag = orthos[gene.geneName];
+            }
+          });
+        });
+      });
+    }
+  }, [orthos]);
 
   useEffect(() => {
     if (genomeObjs && curOrthoID) {
@@ -166,27 +183,7 @@ function App() {
 
   const drawClusters = () => {
     const clusters = colorCluster(curOrthoID, flankSize);
-    if (clusters) {
-      setDisplayClusters(clusters); // New state to hold clusters
-    }
-  };
-
-  const handleRefresh = (event) => {
-    d3.selectAll(".tooltip").remove();
-    const val = event.target.getAttribute("name");
-    if (!val) return;
-
-    const regionName = event.target.parentElement.parentElement.id;
-    setCurOrthoID(val);
-    orthoplotRef.current?.drawClusters(regionName, colorCluster(val, flankSize), panelHeight, panelWidth);
-    initEventHandlers();
-  };
-
-  const initEventHandlers = () => {
-    const cdsElements = document.querySelectorAll(".orthoplot-type-CDS");
-    cdsElements.forEach(element => {
-      element.addEventListener('dblclick', handleRefresh);
-    });
+    setDisplayClusters(clusters); // New state to hold clusters
   };
 
   const handleSubmit = (e) => {
@@ -202,14 +199,12 @@ function App() {
     }
     setCurOrthoID(tmpOrthoID);
     drawClusters();
-    initEventHandlers();
   };
 
   const handleSliderChange = (setter) => (event) => {
     const value = parseInt(event.target.value);
     setter(value);
     drawClusters();
-    initEventHandlers();
   };
 
   const handleDownload = () => {
@@ -228,17 +223,17 @@ function App() {
       alert('No .gff or .gff3 files found');
       return;
     }
-    // Process GFF files...
+    const genomes = [];
     gffFiles.forEach(file => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const gffData = e.target.result;
-        const genomeObj = parseGFFContent(file.name, gffData);
-        console.log(`Parsed GFF file: ${file.name}`, genomeObj);
+        const genome = parseGFFContent(file.name.split('.')[0], gffData);
+        genomes.push(genome);
       };
       reader.readAsText(file);
-    }
-    );
+    });
+    setGenomeObjs(genomes);
   };
 
   const handleTxtFileChange = (event) => {
@@ -247,7 +242,24 @@ function App() {
       alert('Please select a .txt file');
       return;
     }
-    // Process TXT file...
+    // Read file and set orthoTag dictionary
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const lines = e.target.result.split('\n');
+      const orthoTagDict = {};
+      for (const line of lines) {
+        if (line.trim() === "" || line.startsWith("#")) continue; // Skip empty lines and comments
+        const parts = line.split(/\s+/);
+        if (parts.length >= 2) {
+          const geneName = parts[0];
+          const orthoTag = parts[1];
+          orthoTagDict[geneName] = orthoTag;
+        }
+      }
+      setOrthos(orthoTagDict);
+    }
+
+    reader.readAsText(file);
   };
 
   return (
@@ -260,82 +272,95 @@ function App() {
           width={panelWidth}
         />
       </div>
-      <div className="div-floater">
-        <form onSubmit={handleSubmit}>
-          <p>
-            Enter orthoID
+      <Draggable
+        axis="both"
+        nodeRef={divFloater}
+        handle=".drag-handle"
+        defaultPosition={{ x: 20, y: 20 }}
+      >
+        <div className="div-floater" ref={divFloater}>
+          <div className="drag-handle" style={{
+            cursor: 'move',
+            borderBottom: '1px solid #ccc'
+          }}>
+            ⋮⋮ Drag to move
+          </div>
+          <form onSubmit={handleSubmit}>
+            <p>
+              Enter orthoID
+              <input
+                type="text"
+                ref={orthoIDRef}
+                onFocus={(e) => e.target.value = ''}
+              />
+              <input type="submit" value="Go" />
+            </p>
+          </form>
+          <hr />
+          <div>
+            <label htmlFor="panelWidth">Panel Width: {panelWidth}</label>
             <input
-              type="text"
-              ref={orthoIDRef}
-              onFocus={(e) => e.target.value = ''}
+              type="range"
+              id="panelWidth"
+              min="100"
+              max="2000"
+              value={panelWidth}
+              onChange={handleSliderChange(setPanelWidth)}
             />
-            <input type="submit" value="Go" />
-          </p>
-        </form>
-        <hr />
-        <div>
-          <label htmlFor="panelWidth">Panel Width: {panelWidth}</label>
-          <input
-            type="range"
-            id="panelWidth"
-            min="100"
-            max="2000"
-            value={panelWidth}
-            onChange={handleSliderChange(setPanelWidth)}
-          />
+          </div>
+          <div>
+            <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
+            <input
+              type="range"
+              id="panelHeight"
+              min="5"
+              max="100"
+              value={panelHeight}
+              onChange={handleSliderChange(setPanelHeight)}
+            />
+          </div>
+          <div>
+            <label htmlFor="flankSize">Flanking region Size (bp): {flankSize}</label>
+            <input
+              type="range"
+              id="flankSize"
+              min="1000"
+              max="100000"
+              value={flankSize}
+              onChange={handleSliderChange(setFlankSize)}
+            />
+          </div>
+          <hr />
+          <div>
+            <label htmlFor="gffDirectory">GFF Directory: </label>
+            <input
+              type="file"
+              id="gffDirectory"
+              webkitdirectory="true"
+              directory="true"
+              multiple
+              onChange={handleGffDirectoryChange}
+              accept=".gff,.gff3"
+            />
+          </div>
+          <div>
+            <label htmlFor="txtFile">Orthos File: </label>
+            <input
+              type="file"
+              id="txtFile"
+              onChange={handleTxtFileChange}
+              accept=".txt"
+            />
+          </div>
+          <hr />
+          <button
+            className="btn btn-primary"
+            onClick={handleDownload}
+          >
+            <i className="fa fa-download" /> Download SVG
+          </button>
         </div>
-        <div>
-          <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
-          <input
-            type="range"
-            id="panelHeight"
-            min="5"
-            max="100"
-            value={panelHeight}
-            onChange={handleSliderChange(setPanelHeight)}
-          />
-        </div>
-        <div>
-          <label htmlFor="flankSize">Flanking region Size (bp): {flankSize}</label>
-          <input
-            type="range"
-            id="flankSize"
-            min="1000"
-            max="100000"
-            value={flankSize}
-            onChange={handleSliderChange(setFlankSize)}
-          />
-        </div>
-        <hr />
-        <div>
-          <label htmlFor="gffDirectory">GFF Directory: </label>
-          <input
-            type="file"
-            id="gffDirectory"
-            webkitdirectory="true"
-            directory="true"
-            multiple
-            onChange={handleGffDirectoryChange}
-            accept=".gff,.gff3"
-          />
-        </div>
-        <div>
-          <label htmlFor="txtFile">Species File: </label>
-          <input
-            type="file"
-            id="txtFile"
-            onChange={handleTxtFileChange}
-            accept=".txt"
-          />
-        </div>
-        <hr />
-        <button
-          className="btn btn-primary"
-          onClick={handleDownload}
-        >
-          <i className="fa fa-download" /> Download SVG
-        </button>
-      </div>
+      </Draggable>
     </>
   );
 }
