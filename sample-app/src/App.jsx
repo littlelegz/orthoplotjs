@@ -5,7 +5,8 @@ import OrthoPlot from './components/orthoplot';
 import * as d3_save_svg from 'd3-save-svg';
 import './App.css';
 import { parseGFFContent } from './utils/utils';
-import Draggable from 'react-draggable';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 
 function App() {
   const [flankSize, setFlankSize] = useState(5000);
@@ -13,6 +14,7 @@ function App() {
   const [panelHeight, setPanelHeight] = useState(20);
   const [genomeObjs, setGenomeObjs] = useState(null);
   const [orthos, setOrthos] = useState({});
+  const [orthoOptions, setOrthoOptions] = useState([]);
   const [curOrthoID, setCurOrthoID] = useState('');
   const [preOrthoCol, setPreOrthoCol] = useState([]);
   const [displayClusters, setDisplayClusters] = useState([]); // New state to hold clusters
@@ -33,10 +35,19 @@ function App() {
       });
 
     // Warn on page refresh
-    window.onbeforeunload = () => {
-      return "Data will be lost if you refresh the page, are you sure?";
-    };
+    // window.onbeforeunload = () => {
+    //   return "Data will be lost if you refresh the page, are you sure?";
+    // };
   }, []);
+
+  useEffect(() => {
+    if (genomeObjs) {
+      const options = jsonpath.query(genomeObjs, "$..orthoTag")
+        .filter(Boolean)
+        .filter((value, index, self) => self.indexOf(value) === index);
+      setOrthoOptions(options);
+    }
+  }, [genomeObjs]);
 
   useEffect(() => {
     // Apply orthos to genomeObjs
@@ -148,6 +159,7 @@ function App() {
     }).flat().filter(x => x.color).concat(intersection);
   };
 
+  // Creates colored clusters based on the query orthoID (centering), and flankSize
   const colorCluster = useCallback((queryOrthoID, flankSize) => {
     const clusters = aroundOrtho(queryOrthoID, flankSize);
     const orthoTags = jsonpath.query(clusters, "$..orthoTag");
@@ -158,8 +170,6 @@ function App() {
       acc[tag] = (acc[tag] || 0) + 1;
       return acc;
     }, {});
-
-
 
     // Sort by frequency
     const curOrtho = [...new Set(orthoTags)]
@@ -186,18 +196,13 @@ function App() {
     setDisplayClusters(clusters); // New state to hold clusters
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const tmpOrthoID = orthoIDRef.current.value;
-    if (!tmpOrthoID) {
+  const handleSubmit = (e, newValue) => {
+    e?.preventDefault(); // Make preventDefault optional
+    if (!newValue) {
       alert("Empty value");
       return;
     }
-    if (!jsonpath.query(genomeObjs, "$..orthoTag").includes(tmpOrthoID)) {
-      alert(`Cannot find ${tmpOrthoID} in the genomes`);
-      return;
-    }
-    setCurOrthoID(tmpOrthoID);
+    setCurOrthoID(newValue);
     drawClusters();
   };
 
@@ -263,105 +268,97 @@ function App() {
   };
 
   return (
-    <>
-      <div id="cluster" ref={clusterRef} style={{ position: 'absolute', left: 20, top: 20 }}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div id="cluster" ref={clusterRef} style={{ position: 'absolute', left: 20 }}>
         <OrthoPlot
           id="orthoplot"
           clusters={displayClusters}
           height={panelHeight}
-          width={panelWidth}
         />
       </div>
-      <Draggable
-        axis="both"
-        nodeRef={divFloater}
-        handle=".drag-handle"
-        defaultPosition={{ x: 20, y: 20 }}
-      >
-        <div className="div-floater" ref={divFloater}>
-          <div className="drag-handle" style={{
-            cursor: 'move',
-            borderBottom: '1px solid #ccc'
-          }}>
-            ⋮⋮ Drag to move
-          </div>
-          <form onSubmit={handleSubmit}>
-            <p>
-              Enter orthoID
-              <input
-                type="text"
-                ref={orthoIDRef}
-                onFocus={(e) => e.target.value = ''}
+      <div className="div-floater" ref={divFloater}>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <Autocomplete
+            value={curOrthoID}
+            onChange={(event, newValue) => handleSubmit(event, newValue)}
+            options={orthoOptions}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Enter orthoID"
+                variant="outlined"
+                size="small"
+                fullWidth
               />
-              <input type="submit" value="Go" />
-            </p>
-          </form>
-          <hr />
-          <div>
-            <label htmlFor="panelWidth">Panel Width: {panelWidth}</label>
-            <input
-              type="range"
-              id="panelWidth"
-              min="100"
-              max="2000"
-              value={panelWidth}
-              onChange={handleSliderChange(setPanelWidth)}
-            />
-          </div>
-          <div>
-            <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
-            <input
-              type="range"
-              id="panelHeight"
-              min="5"
-              max="100"
-              value={panelHeight}
-              onChange={handleSliderChange(setPanelHeight)}
-            />
-          </div>
-          <div>
-            <label htmlFor="flankSize">Flanking region Size (bp): {flankSize}</label>
-            <input
-              type="range"
-              id="flankSize"
-              min="1000"
-              max="100000"
-              value={flankSize}
-              onChange={handleSliderChange(setFlankSize)}
-            />
-          </div>
-          <hr />
-          <div>
-            <label htmlFor="gffDirectory">GFF Directory: </label>
-            <input
-              type="file"
-              id="gffDirectory"
-              webkitdirectory="true"
-              directory="true"
-              multiple
-              onChange={handleGffDirectoryChange}
-              accept=".gff,.gff3"
-            />
-          </div>
-          <div>
-            <label htmlFor="txtFile">Orthos File: </label>
-            <input
-              type="file"
-              id="txtFile"
-              onChange={handleTxtFileChange}
-              accept=".txt"
-            />
-          </div>
-          <hr />
-          <button
-            className="btn btn-primary"
-            onClick={handleDownload}
-          >
-            <i className="fa fa-download" /> Download SVG
-          </button>
+            )}
+            sx={{ mb: 2 }}
+          />
+        </form>
+        <hr />
+        <div>
+          <label htmlFor="panelWidth">Panel Width: {panelWidth}</label>
+          <input
+            type="range"
+            id="panelWidth"
+            min="100"
+            max="2000"
+            value={panelWidth}
+            onChange={handleSliderChange(setPanelWidth)}
+          />
         </div>
-      </Draggable>
-    </>
+        <div>
+          <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
+          <input
+            type="range"
+            id="panelHeight"
+            min="5"
+            max="100"
+            value={panelHeight}
+            onChange={handleSliderChange(setPanelHeight)}
+          />
+        </div>
+        <div>
+          <label htmlFor="flankSize">Flanking region Size (bp): {flankSize}</label>
+          <input
+            type="range"
+            id="flankSize"
+            min="1000"
+            max="100000"
+            value={flankSize}
+            onChange={handleSliderChange(setFlankSize)}
+          />
+        </div>
+        <hr />
+        <div>
+          <label htmlFor="gffDirectory">GFF Directory: </label>
+          <input
+            type="file"
+            id="gffDirectory"
+            webkitdirectory="true"
+            directory="true"
+            multiple
+            onChange={handleGffDirectoryChange}
+            accept=".gff,.gff3"
+          />
+        </div>
+        <div>
+          <label htmlFor="txtFile">Orthos File: </label>
+          <input
+            type="file"
+            id="txtFile"
+            onChange={handleTxtFileChange}
+            accept=".txt"
+          />
+        </div>
+        <hr />
+        <button
+          className="btn btn-primary"
+          onClick={handleDownload}
+        >
+          <i className="fa fa-download" /> Download SVG
+        </button>
+      </div>
+    </div>
   );
 }
 

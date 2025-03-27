@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-const OrthoPlot = ({ id, clusters, height, width }) => {
+const OrthoPlot = ({ id, clusters, height, width = 910 }) => {
   const svgRef = useRef(null);
   const labelHeight = 12;
   const uniqueId = useRef(0);
@@ -11,7 +11,9 @@ const OrthoPlot = ({ id, clusters, height, width }) => {
     x: 0,
     y: 0
   });
+  const [displayCount, setDisplayCount] = useState(10);
   const tooltipRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const geneArrowPoints = (orf, height, offset, space, scale) => {
     let cap = offset + labelHeight + space;
@@ -127,7 +129,7 @@ const OrthoPlot = ({ id, clusters, height, width }) => {
         .on("mouseout", () => {
           setTooltip(prev => ({ ...prev, show: false }));
         })
-        .on("click", function (event, d) {
+        .on("dblclick", function (event, d) {
           const clickedData = d3.select(event.target).datum();
           console.log(clickedData)
         });
@@ -151,20 +153,24 @@ const OrthoPlot = ({ id, clusters, height, width }) => {
   const drawClusters = () => {
     if (!clusters) return;
 
+    const startIdx = currentPage * displayCount;
+    const endIdx = startIdx + displayCount;
+    const visibleClusters = clusters.slice(startIdx, endIdx);
+
     const container = d3.select(svgRef.current);
     const singleClusterHeight = height + (2 * labelHeight);
 
     container.selectAll("*").remove();
 
     const chart = container
-      .attr("height", singleClusterHeight * clusters.length)
+      .attr("height", singleClusterHeight * visibleClusters.length)
       .attr("width", width);
 
     const allOrfs = [];
     const allRnas = [];
     const allRepeats = [];
 
-    clusters.forEach((cluster, i) => {
+    visibleClusters.forEach((cluster, i) => {
       allOrfs.push(...cluster.genes.filter(n => n.type === "CDS"));
       allRnas.push(...cluster.genes.filter(n => n.type.match(/RNA/)));
       allRepeats.push(...cluster.genes.filter(n => n.type.match(/repeat/)));
@@ -198,11 +204,75 @@ const OrthoPlot = ({ id, clusters, height, width }) => {
 
   useEffect(() => {
     drawClusters();
-  }, [clusters, height, width]);
+  }, [clusters, height, width, displayCount, currentPage]);
+
+  // Add pagination controls
+  const renderPaginationControls = () => {
+    if (clusters?.length <= 10) return null;
+
+    const totalPages = Math.ceil(clusters.length / displayCount);
+    const hasNextPage = (currentPage + 1) * displayCount < clusters.length;
+    const hasPrevPage = currentPage > 0;
+
+    return (
+      <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
+        <button
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={!hasPrevPage}
+          style={{ opacity: hasPrevPage ? 1 : 0.5 }}
+        >
+          ←
+        </button>
+
+        <button
+          onClick={() => {setDisplayCount(10); setCurrentPage(0)}}
+          style={{
+            fontWeight: displayCount === 10 ? 'bold' : 'normal',
+            margin: '0 5px'
+          }}
+        >
+          Show 10
+        </button>
+        <button
+          onClick={() => {setDisplayCount(20); setCurrentPage(0)}}
+          style={{
+            fontWeight: displayCount === 20 ? 'bold' : 'normal',
+            margin: '0 5px'
+          }}
+        >
+          Show 20
+        </button>
+        {clusters.length > 20 && (
+          <button
+            onClick={() => {setDisplayCount(50); setCurrentPage(0)}}
+            style={{
+              fontWeight: displayCount === 50 ? 'bold' : 'normal',
+              margin: '0 5px'
+            }}
+          >
+            Show 50
+          </button>
+        )}
+
+        <button
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={!hasNextPage}
+          style={{ opacity: hasNextPage ? 1 : 0.5 }}
+        >
+          →
+        </button>
+
+        <span style={{ marginLeft: '10px' }}>
+          Page {currentPage + 1} of {totalPages}
+        </span>
+      </div>
+    );
+  };
 
   return (
     <>
-      <div id={id}>
+      {renderPaginationControls()}
+      <div id={id} style={{ overflow: 'hidden', border: '1px solid #ccc', height: 'fit-content', userSelect: 'none' }}>
         <svg ref={svgRef} />
       </div>
       <div
