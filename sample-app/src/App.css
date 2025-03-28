@@ -1,7 +1,6 @@
 body {
   margin: 0;
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  background-image: linear-gradient(to bottom, #020917, #101725);
 }
 
 .content {
@@ -25,11 +24,8 @@ body {
 }
 
 .div-floater {
-  position: absolute;
   display: flex;
   flex-direction: column;
-  top: 1em;
-  right: 1em;
   width: 350px;
   border: 0.5px solid grey;
   background-color: white;

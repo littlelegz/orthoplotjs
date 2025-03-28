@@ -7,6 +7,9 @@ import './App.css';
 import { parseGFFContent } from './utils/utils';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 
 function App() {
   const [flankSize, setFlankSize] = useState(5000);
@@ -18,6 +21,12 @@ function App() {
   const [curOrthoID, setCurOrthoID] = useState('');
   const [preOrthoCol, setPreOrthoCol] = useState([]);
   const [displayClusters, setDisplayClusters] = useState([]); // New state to hold clusters
+  const [contextMenu, setContextMenu] = useState({
+    open: false,
+    position: { x: 0, y: 0 },
+    gene: null
+  });
+  const [newOrthoTag, setNewOrthoTag] = useState('');
 
   const clusterRef = useRef(null);
   const orthoIDRef = useRef(null);
@@ -40,6 +49,7 @@ function App() {
     // };
   }, []);
 
+  // Initialize the orthos options based on genomeObjs
   useEffect(() => {
     if (genomeObjs) {
       const options = jsonpath.query(genomeObjs, "$..orthoTag")
@@ -49,6 +59,7 @@ function App() {
     }
   }, [genomeObjs]);
 
+  // Draw clusters when curOrthoID or genomeObjs change
   useEffect(() => {
     // Apply orthos to genomeObjs
     if (genomeObjs && curOrthoID) {
@@ -76,6 +87,32 @@ function App() {
       drawClusters();
     }
   }, [flankSize, panelHeight, panelWidth]);
+
+  const handleCloseMenu = () => {
+    setContextMenu(prev => ({ ...prev, open: false }));
+    setNewOrthoTag('');
+  };
+
+  const handleAddOrthoTag = () => {
+    if (!contextMenu.gene || !newOrthoTag) return;
+
+    const updatedGenomeObjs = [...genomeObjs];
+    // Update the orthoTag in all matching genes
+    updatedGenomeObjs.forEach(genome => {
+      genome.contigs.forEach(contig => {
+        contig.genes.forEach(gene => {
+          if (gene.geneName === contextMenu.gene.geneName) {
+            gene.orthoTag = newOrthoTag;
+          }
+        });
+      });
+    });
+
+    setGenomeObjs(updatedGenomeObjs);
+    setCurOrthoID(newOrthoTag);
+    handleCloseMenu();
+    drawClusters();
+  };
 
   const aroundOrtho = (queryOrthoID, flankSize) => {
     if (!genomeObjs) return [];
@@ -267,98 +304,158 @@ function App() {
     reader.readAsText(file);
   };
 
+  const dblclickedOn = (event, data) => {
+    setContextMenu({
+      open: true,
+      position: { x: event.pageX, y: event.pageY },
+      gene: data
+    });
+  }
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div id="cluster" ref={clusterRef} style={{ position: 'absolute', left: 20 }}>
-        <OrthoPlot
-          id="orthoplot"
-          clusters={displayClusters}
-          height={panelHeight}
-        />
+    <>
+      <div style={{ display: 'flex', flexDirection: 'row', marginTop: '1em' }}>
+        <div id="cluster" ref={clusterRef} style={{ flexGrow: 1 }}>
+          <OrthoPlot
+            id="orthoplot"
+            clusters={displayClusters}
+            height={panelHeight}
+            width={panelWidth}
+            dblclickedOn={dblclickedOn}
+          />
+        </div>
+        <div className="div-floater" ref={divFloater}>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <Autocomplete
+              value={curOrthoID}
+              onChange={(event, newValue) => handleSubmit(event, newValue)}
+              options={orthoOptions}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Enter orthoID"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                />
+              )}
+              sx={{ mb: 2 }}
+            />
+          </form>
+          <hr />
+          <div>
+            <label htmlFor="panelWidth">Panel Width: {panelWidth}</label>
+            <input
+              type="range"
+              id="panelWidth"
+              min="100"
+              max="2000"
+              value={panelWidth}
+              onChange={handleSliderChange(setPanelWidth)}
+            />
+          </div>
+          <div>
+            <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
+            <input
+              type="range"
+              id="panelHeight"
+              min="5"
+              max="100"
+              value={panelHeight}
+              onChange={handleSliderChange(setPanelHeight)}
+            />
+          </div>
+          <div>
+            <label htmlFor="flankSize">Flanking region Size (bp): {flankSize}</label>
+            <input
+              type="range"
+              id="flankSize"
+              min="1000"
+              max="100000"
+              value={flankSize}
+              onChange={handleSliderChange(setFlankSize)}
+            />
+          </div>
+          <hr />
+          <div>
+            <label htmlFor="gffDirectory">GFF Directory: </label>
+            <input
+              type="file"
+              id="gffDirectory"
+              webkitdirectory="true"
+              directory="true"
+              multiple
+              onChange={handleGffDirectoryChange}
+              accept=".gff,.gff3"
+            />
+          </div>
+          <div>
+            <label htmlFor="txtFile">Orthos File: </label>
+            <input
+              type="file"
+              id="txtFile"
+              onChange={handleTxtFileChange}
+              accept=".txt"
+            />
+          </div>
+          <hr />
+          <button
+            className="btn btn-primary"
+            onClick={handleDownload}
+          >
+            <i className="fa fa-download" /> Download SVG
+          </button>
+        </div>
       </div>
-      <div className="div-floater" ref={divFloater}>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Autocomplete
-            value={curOrthoID}
-            onChange={(event, newValue) => handleSubmit(event, newValue)}
-            options={orthoOptions}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Enter orthoID"
-                variant="outlined"
+      <Menu
+        open={contextMenu.open}
+        onClose={handleCloseMenu}
+        anchorReference="anchorPosition"
+        anchorPosition={
+          contextMenu.open
+            ? { top: contextMenu.position.y, left: contextMenu.position.x }
+            : undefined
+        }
+      >
+        <MenuItem>
+          <div style={{ padding: '8px' }}>
+            <TextField
+              label="New Ortho Tag"
+              value={newOrthoTag}
+              onChange={(e) => setNewOrthoTag(e.target.value)}
+              size="small"
+              fullWidth
+              sx={{ mb: 1 }}
+            />
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+              <Button
                 size="small"
-                fullWidth
-              />
-            )}
-            sx={{ mb: 2 }}
-          />
-        </form>
-        <hr />
-        <div>
-          <label htmlFor="panelWidth">Panel Width: {panelWidth}</label>
-          <input
-            type="range"
-            id="panelWidth"
-            min="100"
-            max="2000"
-            value={panelWidth}
-            onChange={handleSliderChange(setPanelWidth)}
-          />
-        </div>
-        <div>
-          <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
-          <input
-            type="range"
-            id="panelHeight"
-            min="5"
-            max="100"
-            value={panelHeight}
-            onChange={handleSliderChange(setPanelHeight)}
-          />
-        </div>
-        <div>
-          <label htmlFor="flankSize">Flanking region Size (bp): {flankSize}</label>
-          <input
-            type="range"
-            id="flankSize"
-            min="1000"
-            max="100000"
-            value={flankSize}
-            onChange={handleSliderChange(setFlankSize)}
-          />
-        </div>
-        <hr />
-        <div>
-          <label htmlFor="gffDirectory">GFF Directory: </label>
-          <input
-            type="file"
-            id="gffDirectory"
-            webkitdirectory="true"
-            directory="true"
-            multiple
-            onChange={handleGffDirectoryChange}
-            accept=".gff,.gff3"
-          />
-        </div>
-        <div>
-          <label htmlFor="txtFile">Orthos File: </label>
-          <input
-            type="file"
-            id="txtFile"
-            onChange={handleTxtFileChange}
-            accept=".txt"
-          />
-        </div>
-        <hr />
-        <button
-          className="btn btn-primary"
-          onClick={handleDownload}
-        >
-          <i className="fa fa-download" /> Download SVG
-        </button>
-      </div>
-    </div>
+                onClick={handleCloseMenu}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={handleAddOrthoTag}
+                disabled={!newOrthoTag}
+              >
+                Add & Center
+              </Button>
+            </div>
+          </div>
+        </MenuItem>
+        {contextMenu.gene?.orthoTag && (
+          <MenuItem onClick={() => {
+            setCurOrthoID(contextMenu.gene.orthoTag);
+            handleCloseMenu();
+            drawClusters();
+          }}>
+            Center on this OrthoID
+          </MenuItem>
+        )}
+      </Menu>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-const OrthoPlot = ({ id, clusters, height, width = 910 }) => {
+const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
   const svgRef = useRef(null);
   const labelHeight = 12;
   const uniqueId = useRef(0);
@@ -131,7 +131,7 @@ const OrthoPlot = ({ id, clusters, height, width = 910 }) => {
         })
         .on("dblclick", function (event, d) {
           const clickedData = d3.select(event.target).datum();
-          console.log(clickedData)
+          dblclickedOn(event, clickedData);
         });
     }
 
