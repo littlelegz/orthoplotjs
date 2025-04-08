@@ -13,7 +13,6 @@ import Button from '@mui/material/Button';
 
 function App() {
   const [flankSize, setFlankSize] = useState(5000);
-  const [panelWidth, setPanelWidth] = useState(1000);
   const [panelHeight, setPanelHeight] = useState(20);
   const [genomeObjs, setGenomeObjs] = useState(null);
   const [orthos, setOrthos] = useState({});
@@ -29,32 +28,14 @@ function App() {
   const [newOrthoTag, setNewOrthoTag] = useState('');
 
   const clusterRef = useRef(null);
-  const orthoIDRef = useRef(null);
   const divFloater = useRef(null);
-
-  // Load JSON and initialize state
-  useEffect(() => {
-    // Load JSON data
-    fetch('data.json')
-      .then(response => response.json())
-      .then(data => {
-        setGenomeObjs(data);
-        const tmpQuery = jsonpath.query(data, "$..orthoTag");
-        setCurOrthoID(tmpQuery[0]);
-      });
-
-    // Warn on page refresh
-    // window.onbeforeunload = () => {
-    //   return "Data will be lost if you refresh the page, are you sure?";
-    // };
-  }, []);
 
   // Initialize the orthos options based on genomeObjs
   useEffect(() => {
     if (genomeObjs) {
-      const options = jsonpath.query(genomeObjs, "$..orthoTag")
-        .filter(Boolean)
-        .filter((value, index, self) => self.indexOf(value) === index);
+      const options = [...new Set(
+        jsonpath.query(genomeObjs, "$..ortho_tag").filter(Boolean)
+      )];
       setOrthoOptions(options);
     }
   }, [genomeObjs]);
@@ -63,6 +44,7 @@ function App() {
   useEffect(() => {
     // Apply orthos to genomeObjs
     if (genomeObjs && curOrthoID) {
+      console.log("genomeObjs:", genomeObjs);
       drawClusters();
     }
   }, [genomeObjs, curOrthoID, orthos]);
@@ -74,7 +56,7 @@ function App() {
         genome.contigs.forEach(contig => {
           contig.genes.forEach(gene => {
             if (orthos[gene.geneName]) {
-              gene.orthoTag = orthos[gene.geneName];
+              gene.ortho_tag = orthos[gene.geneName];
             }
           });
         });
@@ -86,7 +68,7 @@ function App() {
     if (genomeObjs && curOrthoID) {
       drawClusters();
     }
-  }, [flankSize, panelHeight, panelWidth]);
+  }, [flankSize, panelHeight]);
 
   const handleCloseMenu = () => {
     setContextMenu(prev => ({ ...prev, open: false }));
@@ -102,7 +84,7 @@ function App() {
       genome.contigs.forEach(contig => {
         contig.genes.forEach(gene => {
           if (gene.geneName === contextMenu.gene.geneName) {
-            gene.orthoTag = newOrthoTag;
+            gene.ortho_tag = newOrthoTag;
           }
         });
       });
@@ -115,9 +97,11 @@ function App() {
   };
 
   const aroundOrtho = (queryOrthoID, flankSize) => {
-    if (!genomeObjs) return [];
+    if (!genomeObjs) {
+      console.error("genomeObjs is null or undefined");
+      return [];
+    }
     return genomeObjs.map(function (genome) {
-
       let genomeName = genome.genomeName;
       let speciesName = genome.speciesName;
 
@@ -143,7 +127,7 @@ function App() {
                     start: -gene.end,
                     end: -gene.start,
                     strand: gene.strand * (-1),
-                    orthoTag: gene.orthoTag,
+                    ortho_tag: gene.ortho_tag,
                     description: gene.description,
                     type: gene.type
                   }
@@ -166,7 +150,7 @@ function App() {
                     start: gene.start,
                     end: gene.end,
                     strand: gene.strand,
-                    orthoTag: gene.orthoTag,
+                    ortho_tag: gene.ortho_tag,
                     description: gene.description,
                     type: gene.type,
                   }
@@ -176,7 +160,7 @@ function App() {
         };
 
         let output = contig.genes.filter((x) => {
-          return x.orthoTag == queryOrthoID
+          return x.ortho_tag == queryOrthoID
         }).map(centerAround);
 
         return output;
@@ -185,12 +169,12 @@ function App() {
   };
 
   const colorOrtho = (prevOrthoCol, curOrtho) => {
-    let intersection = prevOrthoCol.filter(x => x.color != "#FFFFFF").filter(x => curOrtho.includes(x.orthoTag)),
+    let intersection = prevOrthoCol.filter(x => x.color != "#FFFFFF").filter(x => curOrtho.includes(x.ortho_tag)),
       colorLeft = d3.schemeSet3.filter(x => !intersection.map(t => t.color).includes(x)),
-      orthoLeft = curOrtho.filter(x => !intersection.map(t => t.orthoTag).includes(x));
+      orthoLeft = curOrtho.filter(x => !intersection.map(t => t.ortho_tag).includes(x));
     return orthoLeft.map(function (e, i) {
       return [{
-        orthoTag: e,
+        ortho_tag: e,
         color: colorLeft[i]
       }];
     }).flat().filter(x => x.color).concat(intersection);
@@ -199,7 +183,7 @@ function App() {
   // Creates colored clusters based on the query orthoID (centering), and flankSize
   const colorCluster = useCallback((queryOrthoID, flankSize) => {
     const clusters = aroundOrtho(queryOrthoID, flankSize);
-    const orthoTags = jsonpath.query(clusters, "$..orthoTag");
+    const orthoTags = jsonpath.query(clusters, "$..ortho_tag");
 
     // Create frequency map for sorting
     const frequencyMap = orthoTags.reduce((acc, tag) => {
@@ -215,12 +199,13 @@ function App() {
 
     // Update colors using state setter
     const newPreOrthoCol = colorOrtho(preOrthoCol, curOrtho);
+    console.log(preOrthoCol)
     setPreOrthoCol(newPreOrthoCol);
 
     // Update cluster colors
     clusters.forEach(cluster => {
       cluster.genes.forEach(gene => {
-        const colorInfo = newPreOrthoCol.find(x => x.orthoTag === gene.orthoTag);
+        const colorInfo = newPreOrthoCol.find(x => x.ortho_tag === gene.ortho_tag);
         gene.color = colorInfo ? colorInfo.color : "#FFFFFF";
       });
     });
@@ -230,6 +215,7 @@ function App() {
 
   const drawClusters = () => {
     const clusters = colorCluster(curOrthoID, flankSize);
+    console.log("Clusters:", clusters);
     setDisplayClusters(clusters); // New state to hold clusters
   };
 
@@ -304,6 +290,43 @@ function App() {
     reader.readAsText(file);
   };
 
+  // Add this new handler function after the other handler functions:
+  const handleJsonFileChange = (event) => {
+    const file = event.target.files[0];
+    if (!file || !file.name.endsWith('.json')) {
+      alert('Please select a .json file');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const jsonData = JSON.parse(e.target.result);
+
+        // Print first 5 contigs for debugging
+        if (jsonData[0] && jsonData[0].contigs) {
+          console.log('First 5 contigs:',
+            jsonData[0].contigs
+              .slice(0, 5)
+              .map(contig => ({
+                name: contig.contigName,
+                length: contig.contigLength,
+                geneCount: contig.genes?.length || 0
+              }))
+          );
+        }
+
+        setGenomeObjs(jsonData);
+        const tmpQuery = jsonpath.query(jsonData, "$..ortho_tag");
+        setCurOrthoID(tmpQuery[0]);
+      } catch (error) {
+        alert('Invalid JSON file format');
+        console.error('Error parsing JSON:', error);
+      }
+    };
+    reader.readAsText(file);
+  };
+
   const dblclickedOn = (event, data) => {
     setContextMenu({
       open: true,
@@ -320,14 +343,13 @@ function App() {
             id="orthoplot"
             clusters={displayClusters}
             height={panelHeight}
-            width={panelWidth}
             dblclickedOn={dblclickedOn}
           />
         </div>
         <div className="div-floater" ref={divFloater}>
           <form onSubmit={(e) => e.preventDefault()}>
             <Autocomplete
-              value={curOrthoID}
+              value={curOrthoID || ''}
               onChange={(event, newValue) => handleSubmit(event, newValue)}
               options={orthoOptions}
               renderInput={(params) => (
@@ -343,17 +365,6 @@ function App() {
             />
           </form>
           <hr />
-          <div>
-            <label htmlFor="panelWidth">Panel Width: {panelWidth}</label>
-            <input
-              type="range"
-              id="panelWidth"
-              min="100"
-              max="2000"
-              value={panelWidth}
-              onChange={handleSliderChange(setPanelWidth)}
-            />
-          </div>
           <div>
             <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
             <input
@@ -396,6 +407,15 @@ function App() {
               id="txtFile"
               onChange={handleTxtFileChange}
               accept=".txt"
+            />
+          </div>
+          <div>
+            <label htmlFor="jsonFile">JSON File: </label>
+            <input
+              type="file"
+              id="jsonFile"
+              onChange={handleJsonFileChange}
+              accept=".json"
             />
           </div>
           <hr />
@@ -445,9 +465,9 @@ function App() {
             </div>
           </div>
         </MenuItem>
-        {contextMenu.gene?.orthoTag && (
+        {contextMenu.gene?.ortho_tag && (
           <MenuItem onClick={() => {
-            setCurOrthoID(contextMenu.gene.orthoTag);
+            setCurOrthoID(contextMenu.gene.ortho_tag);
             handleCloseMenu();
             drawClusters();
           }}>

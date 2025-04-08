@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
-const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
+const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
   const svgRef = useRef(null);
+  const containerRef = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0);
   const labelHeight = 12;
   const uniqueId = useRef(0);
   const [tooltip, setTooltip] = useState({
@@ -14,6 +16,21 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
   const [displayCount, setDisplayCount] = useState(10);
   const tooltipRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
+
+  // Add resize observer to track container width
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const resizeObserver = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        setContainerWidth(entry.contentRect.width);
+      }
+    });
+
+    resizeObserver.observe(container);
+    return () => resizeObserver.disconnect();
+  }, []);
 
   const geneArrowPoints = (orf, height, offset, space, scale) => {
     let cap = offset + labelHeight + space;
@@ -108,7 +125,7 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
           return idx + "-cluster" + cluster.idx + "-" + tagToId(d.geneName) + "-orf";
         })
         .attr("name", function (d) {
-          return d.orthoTag ? d.orthoTag : null;
+          return d.ortho_tag ? d.ortho_tag : null;
         })
         .attr("style", function (d) {
           if (d.color !== undefined && d.type == "CDS") {
@@ -116,8 +133,8 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
           }
         })
         .on("mouseover", function (event, d) {
-          const orthoTag = d.orthoTag;
-          const content = (orthoTag ? "orthoTag=" + orthoTag + "<br>" : "") + d.description;
+          const orthoTag = d.ortho_tag;
+          const content = (orthoTag ? "ortho_tag=" + orthoTag + "<br>" : "") + d.description;
           setTooltip({
             show: true,
             content,
@@ -164,7 +181,9 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
 
     const chart = container
       .attr("height", singleClusterHeight * visibleClusters.length)
-      .attr("width", width);
+      .attr("width", "100%") // Set width to 100%
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", `0 0 ${containerWidth} ${singleClusterHeight * visibleClusters.length}`);
 
     const allOrfs = [];
     const allRnas = [];
@@ -180,17 +199,17 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
 
       const x = d3.scaleLinear()
         .domain([cluster.start, cluster.end])
-        .range([0, width]);
+        .range([0, containerWidth]);
 
       drawOrderedClusterOrfs(cluster, chart, allOrfs, allRepeats, allRnas,
-        x, i, idx, height, width, singleClusterHeight, space);
+        x, i, idx, height, containerWidth, singleClusterHeight, space);
 
       if (cluster.label) {
         chart.append("text")
           .text(cluster.label)
           .attr("class", "orthoplot-clusterlabel")
           .attr("x", function () {
-            return width - this.getComputedTextLength() - 5;
+            return containerWidth - this.getComputedTextLength() - 5;
           })
           .attr("y", () => (singleClusterHeight * i) + labelHeight)
           .attr("font-size", labelHeight);
@@ -204,7 +223,7 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
 
   useEffect(() => {
     drawClusters();
-  }, [clusters, height, width, displayCount, currentPage]);
+  }, [clusters, height, containerWidth, displayCount, currentPage]);
 
   // Add pagination controls
   const renderPaginationControls = () => {
@@ -225,7 +244,7 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
         </button>
 
         <button
-          onClick={() => {setDisplayCount(10); setCurrentPage(0)}}
+          onClick={() => { setDisplayCount(10); setCurrentPage(0) }}
           style={{
             fontWeight: displayCount === 10 ? 'bold' : 'normal',
             margin: '0 5px'
@@ -234,7 +253,7 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
           Show 10
         </button>
         <button
-          onClick={() => {setDisplayCount(20); setCurrentPage(0)}}
+          onClick={() => { setDisplayCount(20); setCurrentPage(0) }}
           style={{
             fontWeight: displayCount === 20 ? 'bold' : 'normal',
             margin: '0 5px'
@@ -244,7 +263,7 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
         </button>
         {clusters.length > 20 && (
           <button
-            onClick={() => {setDisplayCount(50); setCurrentPage(0)}}
+            onClick={() => { setDisplayCount(50); setCurrentPage(0) }}
             style={{
               fontWeight: displayCount === 50 ? 'bold' : 'normal',
               margin: '0 5px'
@@ -272,7 +291,17 @@ const OrthoPlot = ({ id, clusters, height, width = 1000, dblclickedOn }) => {
   return (
     <>
       {renderPaginationControls()}
-      <div id={id} style={{ overflow: 'hidden', border: '1px solid #ccc', height: 'fit-content', userSelect: 'none' }}>
+      <div
+        id={id}
+        ref={containerRef}
+        style={{
+          overflow: 'hidden',
+          border: '1px solid #ccc',
+          height: 'fit-content',
+          userSelect: 'none',
+          width: '100%' // Ensure container takes full width
+        }}
+      >
         <svg ref={svgRef} />
       </div>
       <div
