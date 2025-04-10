@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import { MuiColorInput } from 'mui-color-input'
 import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
 import FormatColorResetIcon from '@mui/icons-material/FormatColorReset';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function App() {
   const [flankSize, setFlankSize] = useState(5000);
@@ -122,6 +123,21 @@ function App() {
         })
       }));
     });
+  };
+
+  const handleDeleteContig = () => {
+    if (!contextMenu.gene || !genomeObjs) return;
+
+    const updatedGenomeObjs = genomeObjs.map(genome => ({
+      ...genome,
+      contigs: genome.contigs.filter(contig =>
+        !contig.genes.some(gene => gene.geneName === contextMenu.gene.geneName)
+      )
+    }));
+
+    setGenomeObjs(updatedGenomeObjs);
+    handleCloseMenu();
+    drawClusters();
   };
 
   const aroundOrtho = (queryOrthoID, flankSize) => {
@@ -277,7 +293,6 @@ function App() {
   const handleSubmit = (e, newValue) => {
     e?.preventDefault(); // Make preventDefault optional
     if (!newValue) {
-      alert("Empty value");
       return;
     }
     setCurOrthoID(newValue);
@@ -405,8 +420,17 @@ function App() {
           <form onSubmit={(e) => e.preventDefault()}>
             <Autocomplete
               value={curOrthoID || ''}
-              onChange={(event, newValue) => handleSubmit(event, newValue)}
               options={orthoOptions}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && e.target.value) {
+                  handleSubmit(e, e.target.value);
+                }
+              }}
+              onBlur={(e) => {
+                if (e.target.value) {
+                  handleSubmit(e, e.target.value);
+                }
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -560,6 +584,20 @@ function App() {
             >
               <CenterFocusStrongIcon fontSize="small" />
               <span>Center</span>
+            </MenuItem>
+
+            <MenuItem
+              onClick={handleDeleteContig}
+              sx={{
+                minHeight: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                color: 'error.main' // Makes the delete button red
+              }}
+            >
+              <DeleteIcon fontSize="small" />
+              <span>Delete Contig</span>
             </MenuItem>
 
           </div>
