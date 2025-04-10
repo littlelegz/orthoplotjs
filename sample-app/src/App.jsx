@@ -10,6 +10,9 @@ import TextField from '@mui/material/TextField';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import { MuiColorInput } from 'mui-color-input'
+import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
+import FormatColorResetIcon from '@mui/icons-material/FormatColorReset';
 
 function App() {
   const [flankSize, setFlankSize] = useState(5000);
@@ -44,14 +47,12 @@ function App() {
   useEffect(() => {
     // Apply orthos to genomeObjs
     if (genomeObjs && curOrthoID) {
-      console.log("genomeObjs:", genomeObjs);
       drawClusters();
     }
   }, [genomeObjs, curOrthoID, orthos]);
 
   useEffect(() => {
     if (orthos && genomeObjs) {
-      console.log("Applying orthos to genomeObjs...");
       genomeObjs.forEach(genome => {
         genome.contigs.forEach(contig => {
           contig.genes.forEach(gene => {
@@ -96,9 +97,35 @@ function App() {
     drawClusters();
   };
 
+  const handleColorChange = (newColor) => {
+    if (!contextMenu.gene?.ortho_tag) return;
+
+    setPreOrthoCol(prev => {
+      const updated = prev.map(item => {
+        if (item.ortho_tag === contextMenu.gene.ortho_tag) {
+          return { ...item, color: newColor };
+        }
+        return item;
+      });
+      return updated;
+    });
+
+    // Update the clusters with new color
+    setDisplayClusters(prev => {
+      return prev.map(cluster => ({
+        ...cluster,
+        genes: cluster.genes.map(gene => {
+          if (gene.ortho_tag === contextMenu.gene.ortho_tag) {
+            return { ...gene, color: newColor };
+          }
+          return gene;
+        })
+      }));
+    });
+  };
+
   const aroundOrtho = (queryOrthoID, flankSize) => {
     if (!genomeObjs) {
-      console.error("genomeObjs is null or undefined");
       return [];
     }
     return genomeObjs.map(function (genome) {
@@ -169,19 +196,49 @@ function App() {
   };
 
   const colorOrtho = (prevOrthoCol, curOrtho) => {
-    let intersection = prevOrthoCol.filter(x => x.color != "#FFFFFF").filter(x => curOrtho.includes(x.ortho_tag)),
-      colorLeft = d3.schemeSet3.filter(x => !intersection.map(t => t.color).includes(x)),
-      orthoLeft = curOrtho.filter(x => !intersection.map(t => t.ortho_tag).includes(x));
-    return orthoLeft.map(function (e, i) {
-      return [{
-        ortho_tag: e,
-        color: colorLeft[i]
-      }];
-    }).flat().filter(x => x.color).concat(intersection);
+    const intersection = prevOrthoCol
+      .filter(x => curOrtho.includes(x.ortho_tag));
+
+    // Find orthos that need new colors
+    const orthoLeft = curOrtho.filter(x =>
+      !intersection.map(t => t.ortho_tag).includes(x)
+    );
+
+    // Get available colors from d3 schemes
+    const baseColors = [
+      ...d3.schemeSet3,
+      ...d3.schemeSet2,
+      ...d3.schemePaired,
+      ...d3.schemeTableau10
+    ];
+
+    // Filter out already used colors
+    const usedColors = intersection.map(t => t.color);
+    let colorLeft = baseColors.filter(x => !usedColors.includes(x));
+
+    // Generate additional colors if needed
+    while (colorLeft.length < orthoLeft.length) {
+      const newColor = d3.rgb(
+        Math.random() * 255,
+        Math.random() * 255,
+        Math.random() * 255
+      ).formatHex();
+      if (!colorLeft.includes(newColor) && !usedColors.includes(newColor)) {
+        colorLeft.push(newColor);
+      }
+    }
+
+    // Create new color assignments
+    const newAssignments = orthoLeft.map((e, i) => ({
+      ortho_tag: e,
+      color: colorLeft[i]
+    }));
+
+    return [...newAssignments, ...intersection];
   };
 
   // Creates colored clusters based on the query orthoID (centering), and flankSize
-  const colorCluster = useCallback((queryOrthoID, flankSize) => {
+  const colorCluster = (queryOrthoID, flankSize) => {
     const clusters = aroundOrtho(queryOrthoID, flankSize);
     const orthoTags = jsonpath.query(clusters, "$..ortho_tag");
 
@@ -199,7 +256,6 @@ function App() {
 
     // Update colors using state setter
     const newPreOrthoCol = colorOrtho(preOrthoCol, curOrtho);
-    console.log(preOrthoCol)
     setPreOrthoCol(newPreOrthoCol);
 
     // Update cluster colors
@@ -211,11 +267,10 @@ function App() {
     });
 
     return clusters;
-  }, [preOrthoCol]);
+  };
 
   const drawClusters = () => {
     const clusters = colorCluster(curOrthoID, flankSize);
-    console.log("Clusters:", clusters);
     setDisplayClusters(clusters); // New state to hold clusters
   };
 
@@ -448,10 +503,7 @@ function App() {
               sx={{ mb: 1 }}
             />
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-              <Button
-                size="small"
-                onClick={handleCloseMenu}
-              >
+              <Button size="small" onClick={handleCloseMenu}>
                 Cancel
               </Button>
               <Button
@@ -466,13 +518,51 @@ function App() {
           </div>
         </MenuItem>
         {contextMenu.gene?.ortho_tag && (
-          <MenuItem onClick={() => {
-            setCurOrthoID(contextMenu.gene.ortho_tag);
-            handleCloseMenu();
-            drawClusters();
-          }}>
-            Center on this OrthoID
-          </MenuItem>
+          <div>
+            <MenuItem>
+              <div style={{ padding: '8px', width: '200px' }}>
+                <p style={{ margin: '0 0 8px 0' }}>Change Color</p>
+                <MuiColorInput
+                  format="hex"
+                  value={preOrthoCol.find(x =>
+                    x.ortho_tag === contextMenu.gene?.ortho_tag
+                  )?.color || '#FFFFFF'}
+                  onChange={handleColorChange}
+                />
+              </div>
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => handleColorChange('#FFFFFF')}
+              sx={{
+                minHeight: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1
+              }}
+            >
+              <FormatColorResetIcon fontSize="small" />
+              <span>Clear Color</span>
+            </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                setCurOrthoID(contextMenu.gene.ortho_tag);
+                handleCloseMenu();
+                drawClusters();
+              }}
+              sx={{
+                minHeight: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1
+              }}
+            >
+              <CenterFocusStrongIcon fontSize="small" />
+              <span>Center</span>
+            </MenuItem>
+
+          </div>
         )}
       </Menu>
     </>

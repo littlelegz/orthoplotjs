@@ -289,20 +289,28 @@ const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
   };
 
   return (
-    <>
+    <div style={{ 
+      height: '95vh', 
+      display: 'flex', 
+      flexDirection: 'column',
+      padding: '10px',
+      boxSizing: 'border-box'
+    }}>
       {renderPaginationControls()}
       <div
         id={id}
         ref={containerRef}
         style={{
-          overflow: 'hidden',
+          flex: 1,
           border: '1px solid #ccc',
-          height: 'fit-content',
+          overflow: 'auto', 
           userSelect: 'none',
-          width: '100%' // Ensure container takes full width
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column'
         }}
       >
-        <svg ref={svgRef} />
+        <svg ref={svgRef} style={{ minHeight: 'min-content' }} />
       </div>
       <div
         className="tooltip"
@@ -321,7 +329,7 @@ const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
         }}
         ref={tooltipRef}
       />
-    </>
+    </div>
   );
 };
 
