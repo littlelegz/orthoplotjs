@@ -50,19 +50,26 @@ function App() {
     if (genomeObjs && curOrthoID) {
       drawClusters();
     }
-  }, [genomeObjs, curOrthoID, orthos]);
+  }, [genomeObjs, curOrthoID]);
 
   useEffect(() => {
     if (orthos && genomeObjs) {
-      genomeObjs.forEach(genome => {
-        genome.contigs.forEach(contig => {
-          contig.genes.forEach(gene => {
-            if (orthos[gene.geneName]) {
-              gene.ortho_tag = orthos[gene.geneName];
-            }
-          });
-        });
-      });
+      // Create new copy of genomeObjs to maintain immutability
+      const updatedGenomeObjs = genomeObjs.map(genome => ({
+        ...genome,
+        contigs: genome.contigs.map(contig => ({
+          ...contig,
+          genes: contig.genes.map(gene => ({
+            ...gene,
+            ortho_tag: orthos[gene.geneName] || gene.ortho_tag
+          }))
+        }))
+      }));
+
+      // Update state with new genome objects
+      setGenomeObjs(updatedGenomeObjs);
+      setCurOrthoID(orthos[Object.keys(orthos)[0]] || '');
+      drawClusters();
     }
   }, [orthos]);
 
@@ -331,6 +338,8 @@ function App() {
       };
       reader.readAsText(file);
     });
+
+    console.log(genomes)
     setGenomeObjs(genomes);
   };
 
@@ -593,7 +602,7 @@ function App() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
-                color: 'error.main' // Makes the delete button red
+                color: 'error.main'
               }}
             >
               <DeleteIcon fontSize="small" />
