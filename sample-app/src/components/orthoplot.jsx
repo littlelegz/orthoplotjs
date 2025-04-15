@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import './orthoplot.css';
 
 const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
   const svgRef = useRef(null);
@@ -234,64 +235,64 @@ const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
     const hasPrevPage = currentPage > 0;
 
     return (
-      <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-        <button
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={!hasPrevPage}
-          style={{ opacity: hasPrevPage ? 1 : 0.5 }}
-        >
-          ←
-        </button>
-
-        <button
-          onClick={() => { setDisplayCount(10); setCurrentPage(0) }}
-          style={{
-            fontWeight: displayCount === 10 ? 'bold' : 'normal',
-            margin: '0 5px'
-          }}
-        >
-          Show 10
-        </button>
-        <button
-          onClick={() => { setDisplayCount(20); setCurrentPage(0) }}
-          style={{
-            fontWeight: displayCount === 20 ? 'bold' : 'normal',
-            margin: '0 5px'
-          }}
-        >
-          Show 20
-        </button>
-        {clusters.length > 20 && (
+      <div className="pagination-controls">
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '12px'
+        }}>
           <button
-            onClick={() => { setDisplayCount(50); setCurrentPage(0) }}
-            style={{
-              fontWeight: displayCount === 50 ? 'bold' : 'normal',
-              margin: '0 5px'
-            }}
+            className="pagination-button"
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={!hasPrevPage}
           >
-            Show 50
+            ←
           </button>
-        )}
 
-        <button
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={!hasNextPage}
-          style={{ opacity: hasNextPage ? 1 : 0.5 }}
-        >
-          →
-        </button>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button
+              className={`pagination-button ${displayCount === 10 ? 'active' : ''}`}
+              onClick={() => { setDisplayCount(10); setCurrentPage(0) }}
+            >
+              10
+            </button>
+            <button
+              className={`pagination-button ${displayCount === 20 ? 'active' : ''}`}
+              onClick={() => { setDisplayCount(20); setCurrentPage(0) }}
+            >
+              20
+            </button>
+            {clusters.length > 20 && (
+              <button
+                className={`pagination-button ${displayCount === 50 ? 'active' : ''}`}
+                onClick={() => { setDisplayCount(50); setCurrentPage(0) }}
+              >
+                50
+              </button>
+            )}
+          </div>
 
-        <span style={{ marginLeft: '10px' }}>
-          Page {currentPage + 1} of {totalPages}
-        </span>
+          <button
+            className="pagination-button"
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={!hasNextPage}
+          >
+            →
+          </button>
+
+          <span className="pagination-info">
+            Page {currentPage + 1} of {totalPages}
+          </span>
+        </div>
       </div>
     );
   };
 
   return (
-    <div style={{ 
-      height: '95vh', 
-      display: 'flex', 
+    <div style={{
+      height: '85vh',
+      display: 'flex',
       flexDirection: 'column',
       padding: '10px',
       boxSizing: 'border-box'
@@ -303,7 +304,7 @@ const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
         style={{
           flex: 1,
           border: '1px solid #ccc',
-          overflow: 'auto', 
+          overflow: 'auto',
           userSelect: 'none',
           width: '100%',
           display: 'flex',

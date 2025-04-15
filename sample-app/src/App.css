@@ -24,10 +24,103 @@ body {
 }
 
 .div-floater {
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0 20px;
+  min-width: 300px;
+  height: fit-content;
+}
+
+.file-input-container {
+  margin-bottom: 16px;
+}
+
+.file-input-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.custom-file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.custom-file-input:hover {
+  border-color: #2196f3;
+  background: #f1f8ff;
+}
+
+.slider-container {
+  margin-bottom: 16px;
+}
+
+.slider-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.download-button {
+  width: 100%;
+  padding: 10px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s ease;
+}
+
+.download-button:hover {
+  background: #1976d2;
+}
+
+.section-divider {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+.cluster-container {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 0 20px 20px 20px;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
-  width: 350px;
-  background-color: white;
+  flex-grow: 1;
+}
+
+.cluster-container svg {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
+
+.plot-header {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  color: #666;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .tooltip {

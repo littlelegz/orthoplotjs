@@ -14,6 +14,7 @@ import { MuiColorInput } from 'mui-color-input'
 import CenterFocusStrongIcon from '@mui/icons-material/CenterFocusStrong';
 import FormatColorResetIcon from '@mui/icons-material/FormatColorReset';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function App() {
   const [flankSize, setFlankSize] = useState(5000);
@@ -30,6 +31,7 @@ function App() {
     gene: null
   });
   const [newOrthoTag, setNewOrthoTag] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const clusterRef = useRef(null);
   const divFloater = useRef(null);
@@ -377,7 +379,9 @@ function App() {
       return;
     }
 
+    setIsLoading(true); // Start loading
     const reader = new FileReader();
+
     reader.onload = (e) => {
       try {
         const jsonData = JSON.parse(e.target.result);
@@ -401,8 +405,15 @@ function App() {
       } catch (error) {
         alert('Invalid JSON file format');
         console.error('Error parsing JSON:', error);
+      } finally {
+        setIsLoading(false); // End loading
       }
     };
+    reader.onerror = () => {
+      alert('Error reading file');
+      setIsLoading(false);
+    };
+
     reader.readAsText(file);
   };
 
@@ -417,7 +428,8 @@ function App() {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'row', marginTop: '1em' }}>
-        <div id="cluster" ref={clusterRef} style={{ flexGrow: 1 }}>
+        <div className="cluster-container" ref={clusterRef}>
+          <div className="plot-header">Gene Neighborhood Plot</div>
           <OrthoPlot
             id="orthoplot"
             clusters={displayClusters}
@@ -449,12 +461,16 @@ function App() {
                   fullWidth
                 />
               )}
-              sx={{ mb: 2 }}
+              sx={{ mb: 3 }}
             />
           </form>
-          <hr />
-          <div>
-            <label htmlFor="panelHeight">Panel Height: {panelHeight}</label>
+
+          <hr className="section-divider" />
+
+          <div className="slider-container">
+            <label className="slider-label">
+              Plot Height: {panelHeight}
+            </label>
             <input
               type="range"
               id="panelHeight"
@@ -462,10 +478,14 @@ function App() {
               max="100"
               value={panelHeight}
               onChange={handleSliderChange(setPanelHeight)}
+              style={{ width: '100%' }}
             />
           </div>
-          <div>
-            <label htmlFor="flankSize">Flanking region Size (bp): {flankSize}</label>
+
+          <div className="slider-container">
+            <label className="slider-label">
+              Flanking region Size (bp): {flankSize}
+            </label>
             <input
               type="range"
               id="flankSize"
@@ -473,12 +493,18 @@ function App() {
               max="100000"
               value={flankSize}
               onChange={handleSliderChange(setFlankSize)}
+              style={{ width: '100%' }}
             />
           </div>
-          <hr />
-          <div>
-            <label htmlFor="gffDirectory">GFF Directory: </label>
+
+          <hr className="section-divider" />
+
+          <div className="file-input-container">
+            <label className="file-input-label" htmlFor="gffDirectory">
+              GFF Directory
+            </label>
             <input
+              className="custom-file-input"
               type="file"
               id="gffDirectory"
               webkitdirectory="true"
@@ -488,30 +514,42 @@ function App() {
               accept=".gff,.gff3"
             />
           </div>
-          <div>
-            <label htmlFor="txtFile">Orthos File: </label>
+
+          <div className="file-input-container">
+            <label className="file-input-label" htmlFor="txtFile">
+              Orthos File
+            </label>
             <input
+              className="custom-file-input"
               type="file"
               id="txtFile"
               onChange={handleTxtFileChange}
               accept=".txt"
             />
           </div>
-          <div>
-            <label htmlFor="jsonFile">JSON File: </label>
-            <input
-              type="file"
-              id="jsonFile"
-              onChange={handleJsonFileChange}
-              accept=".json"
-            />
+
+          <div className="file-input-container">
+            <label className="file-input-label" htmlFor="jsonFile">
+              JSON File
+            </label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <input
+                className="custom-file-input"
+                type="file"
+                id="jsonFile"
+                onChange={handleJsonFileChange}
+                accept=".json"
+                disabled={isLoading}
+              />
+              {isLoading && <CircularProgress size={24} />}
+            </div>
           </div>
-          <hr />
-          <button
-            className="btn btn-primary"
-            onClick={handleDownload}
-          >
-            <i className="fa fa-download" /> Download SVG
+
+          <hr className="section-divider" />
+
+          <button className="download-button" onClick={handleDownload}>
+            <i className="fa fa-download" />
+            Download SVG
           </button>
         </div>
       </div>
