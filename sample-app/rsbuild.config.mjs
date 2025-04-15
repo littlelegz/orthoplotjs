@@ -6,4 +6,9 @@ export default defineConfig({
   output: {
     assetPrefix: '/orthoplotjs',
   },
+  html: {
+    template: './public/index.html',
+    title: 'OrthoPlot.js',
+    favicon: './public/favicon.ico'
+  },
 });

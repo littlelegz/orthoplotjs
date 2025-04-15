@@ -17,6 +17,7 @@ const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
   const [displayCount, setDisplayCount] = useState(10);
   const tooltipRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [pageInput, setPageInput] = useState('');
 
   // Add resize observer to track container width
   useEffect(() => {
@@ -226,6 +227,32 @@ const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
     drawClusters();
   }, [clusters, height, containerWidth, displayCount, currentPage]);
 
+  useEffect(() => {
+    setCurrentPage(0); // Reset to first page when clusters change
+  }, [clusters]);
+
+  // Handle page input change
+  const handlePageInputChange = (e) => {
+    const value = e.target.value;
+    setPageInput(value);
+  };
+
+  const handlePageInputSubmit = (e) => {
+    if (e.key === 'Enter') {
+      const totalPages = Math.ceil(clusters.length / displayCount);
+      const pageNum = parseInt(e.target.value);
+
+      if (isNaN(pageNum) || pageNum < 1) {
+        setCurrentPage(0);
+      } else if (pageNum > totalPages) {
+        setCurrentPage(totalPages - 1);
+      } else {
+        setCurrentPage(pageNum - 1);
+      }
+      setPageInput('');
+    }
+  };
+
   // Add pagination controls
   const renderPaginationControls = () => {
     if (clusters?.length <= 10) return null;
@@ -281,9 +308,22 @@ const OrthoPlot = ({ id, clusters, height, dblclickedOn }) => {
             →
           </button>
 
-          <span className="pagination-info">
-            Page {currentPage + 1} of {totalPages}
-          </span>
+          <div className="pagination-info" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            Page <input
+              type="text"
+              value={pageInput}
+              onChange={handlePageInputChange}
+              onKeyDown={handlePageInputSubmit}
+              placeholder={currentPage + 1}
+              style={{
+                width: '40px',
+                padding: '4px',
+                borderRadius: '4px',
+                border: '1px solid #e0e0e0',
+                textAlign: 'center'
+              }}
+            /> of {totalPages}
+          </div>
         </div>
       </div>
     );
