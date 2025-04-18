@@ -417,6 +417,24 @@ function App() {
     reader.readAsText(file);
   };
 
+  const handleJsonDownload = () => {
+    if (!genomeObjs) return;
+
+    const jsonString = JSON.stringify(genomeObjs, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `genome_data_${Date.now()}.json`;
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const dblclickedOn = (event, data) => {
     setContextMenu({
       open: true,
@@ -550,6 +568,16 @@ function App() {
           <button className="download-button" onClick={handleDownload}>
             <i className="fa fa-download" />
             Download SVG
+          </button>
+          
+          <button
+            className="download-button"
+            onClick={handleJsonDownload}
+            style={{ marginTop: '8px' }}
+            disabled={!genomeObjs}
+          >
+            <i className="fa fa-download" />
+            Download JSON
           </button>
         </div>
       </div>
